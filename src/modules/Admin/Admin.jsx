@@ -11,13 +11,13 @@ function Admin() {
         <Col
           sm={3}
           className="text-light px-5 py-5"
-          style={{ backgroundColor: "rgb(42 39 39 / 84%)" }}
+          style={{ backgroundColor: "#333a42" }}
         >
           <div>Quản Lý Người Dùng</div>
           <div>Quản Lý Phim</div>
           <div>Quản Lý Lịch Chiếu</div>
         </Col>
-        <Col sm={9} style={{ backgroundColor: "gray" }}>
+        <Col sm={9} style={{ backgroundColor: "#3b434e" }}>
           <User />
           <Film />
           <Schedule />

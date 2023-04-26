@@ -10,7 +10,10 @@ function User() {
         <h1 className="text-center text-light">Quản lý người dùng</h1>
       </div>
       <div>
-        <ButtonCss info={"Thêm phim"} />
+        <ButtonCss info={"Thêm người dùng"} />
+      </div>
+      <div>
+        <input placeholder="Tìm kiếm" className={timkiem}></input>
       </div>
     </div>
   );
