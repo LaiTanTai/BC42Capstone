@@ -1,0 +1,8 @@
+@import './../../Color/color.scss';
+.ant-menu-item{
+    position:relative
+}
+:where(.css-dev-only-do-not-override-htwhyh).ant-menu .ant-menu-item .ant-menu-item-icon +span, :where(.css-dev-only-do-not-override-htwhyh).ant-menu .ant-menu-submenu-title .ant-menu-item-icon +span, :where(.css-dev-only-do-not-override-htwhyh).ant-menu .ant-menu-item .anticon +span, :where(.css-dev-only-do-not-override-htwhyh).ant-menu .ant-menu-submenu-title .anticon +span{
+    
+    position: absolute;
+}

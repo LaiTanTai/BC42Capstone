@@ -19,4 +19,5 @@ export const getMovieDetail = async (movieID) =>{
         MaPhim:movieID
     }
     })    
+    return data
 }

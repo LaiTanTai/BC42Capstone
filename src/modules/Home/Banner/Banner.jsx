@@ -1,5 +1,8 @@
 import React from 'react'
+import {AiOutlinePlayCircle} from 'react-icons/ai'
 import { getBannerapi } from '../../../apis/movieAPI';
+import './Banner.scss'
+import Carousel from 'react-bootstrap/Carousel';
 import { useState, useEffect } from 'react'
 function Banner() {
   const [Banner , setBanner]= useState([]);
@@ -17,12 +20,21 @@ function Banner() {
   },[])
   if(error) return null;
   return (
-    <div style={{display:"flex"}}>{
+    <Carousel>
+    {
       Banner.map((item)=>{
-        return <img height={300} src={item.hinhAnh}></img>
+        return (
+          <Carousel.Item interval={10000}>
+          <div className='imageVideo'>
+            <img className='image' src={item.hinhAnh}>
+            </img>
+            <button className='button'><AiOutlinePlayCircle/></button>
+          </div>
+          </Carousel.Item>
+        )
       })
     }
-    </div>
+    </Carousel>
   )
 }
 
