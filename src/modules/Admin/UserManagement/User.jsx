@@ -17,64 +17,62 @@ function User() {
       <div>
         <ButtonCss info={"Thêm người dùng"} handleClick={handleShow} />
 
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton className={style.modalContent}>
+        <Modal className="Modal-background" show={show} onHide={handleClose}>
+          <Modal.Header className="text-light">
             <Modal.Title>Thêm người dùng</Modal.Title>
           </Modal.Header>
-          <Modal.Body className={style.modalContent}>
+          <Modal.Body>
             <Form>
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridEmail">
-                  <Form.Label className="text-light">Tên Phim</Form.Label>
-                  <Form.Control placeholder="Tên Phim" />
+                  <Form.Label className="text-light">Tài Khoản</Form.Label>
+                  <Form.Control placeholder="Tài Khoản" />
                 </Form.Group>
                 <Form.Group as={Col} controlId="formGridPassword">
-                  <Form.Label className="text-light">Ngày Chiếu</Form.Label>
-                  <Form.Control placeholder="Tên Phim" />
+                  <Form.Label className="text-light">Mật Khẩu</Form.Label>
+                  <Form.Control placeholder="Mật Khẩu" type="password" />
                 </Form.Group>
               </Row>
 
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridEmail">
-                  <Form.Label className="text-light">Tên Rạp</Form.Label>
-                  <Form.Control placeholder="Tên Rạp" />
+                  <Form.Label className="text-light">Họ Tên</Form.Label>
+                  <Form.Control placeholder="Họ Tên" />
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridEmail">
-                  <Form.Label className="text-light">Giờ Chiếu</Form.Label>
-                  <Form.Control placeholder="Tên Rạp" />
-                </Form.Group>
-              </Row>
-
-              <Row className="mb-3">
-                <Form.Group as={Col} controlId="formGridEmail">
-                  <Form.Label className="text-light">Địa Chỉ Rạp</Form.Label>
-                  <Form.Control placeholder="Địa Chỉ Rạp" />
-                </Form.Group>
-
-                <Form.Group as={Col} controlId="formGridEmail">
-                  <Form.Label className="text-light">Giá Vé</Form.Label>
-                  <Form.Control placeholder="Giá Vé" />
+                  <Form.Label className="text-light">Số Điện Thoại</Form.Label>
+                  <Form.Control placeholder="ví dụ: 08xxxxxxx" />
                 </Form.Group>
               </Row>
 
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridEmail">
-                  <Form.Label className="text-light">Mã Rạp</Form.Label>
-                  <Form.Control placeholder="Mã Rạp" />
+                  <Form.Label className="text-light">
+                    Mã Loại Người Dùng
+                  </Form.Label>
+                  <Form.Control placeholder="Mã Loại Người Dùng" />
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridEmail">
+                  <Form.Label className="text-light">Mã Nhóm</Form.Label>
+                  <Form.Control placeholder="Mã Nhóm" />
+                </Form.Group>
+              </Row>
+
+              <Row className="mb-3">
+                <Form.Group as={Col} controlId="formGridEmail">
+                  <Form.Label className="text-light">Email</Form.Label>
+                  <Form.Control placeholder="Email" type="email" />
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridEmail"></Form.Group>
               </Row>
             </Form>{" "}
           </Modal.Body>
-          <Modal.Footer className={style.modalContent}>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={handleClose}>
-              Save Changes
-            </Button>
+          <Modal.Footer>
+            <ButtonCss info={"Đóng"} handleClick={handleClose} />
+            <ButtonCss info={"Thêm người dùng"} />
           </Modal.Footer>
         </Modal>
       </div>
