@@ -2,10 +2,10 @@ import axiosClient from "./axiosClient";
 
 export const getDataTicket = async () => {
   const { data } = await axiosClient.get(
-    "/api/QuanLyDatVe/LayDanhSachPhongVe",
+    "/api/QuanLyDatVe/LayDanhSachPhongVe?",
     {
       params: {
-        maNhom: "GP01",
+        maNhom: "GP04 ",
       },
     }
   );
