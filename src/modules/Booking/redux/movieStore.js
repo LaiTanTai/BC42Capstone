@@ -1,4 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-const store = configureStore({
-  reducer: {},
+import movieReducer from "./bookingReducer";
+const movieStore = configureStore({
+  reducer: {
+    seatBooking: movieReducer,
+  },
 });
+export default movieStore;
