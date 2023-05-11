@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import bookingReducer from "./bookingReducer";
+import getDataTicketReducer from "./getDataTicketSlice";
 const bookingStore = configureStore({
   reducer: {
-    seatBooking: bookingReducer,
+    getDataTicketReducer,
   },
 });
 export default bookingStore;

@@ -1,3 +1,19 @@
-.container {
-    width: 100%;
+
+
+.dataInfor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.setButtonTicket {
+    color: #fff;
+    width: 105%;
+    font-size: 25px;
+    margin-top: 20px;
+    background-color: #fb4226;
+    height: 55px;
+    border: none;
+    position: relative;
+    left: -12px;
 }

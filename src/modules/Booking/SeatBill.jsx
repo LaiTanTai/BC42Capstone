@@ -1,83 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./SeatBill.module.scss";
+import { getDataTicket } from "../../apis/bookingAPI";
 
-function SeatBill() {
+function SeatBill({ movieID }) {
   const dispatch = useDispatch();
+  console.log(movieID);
 
-  const { seatSelected } = useSelector((state) => state.seatBooking);
+  const { dataTicket } = useSelector((state) => state.getDataTicketReducer);
 
-  const handleOrder = (seatOrder) => {
-    dispatch({
-      type: "DAT_GHE",
-      seatOrder,
-    });
-    alert("Đặt vé thành công");
-  };
+  console.log(dataTicket);
 
-  const hanldeDelete = (soGhe) => {
-    dispatch({
-      type: "HUY_GHE",
-      soGhe,
-    });
-  };
+  useEffect(() => {
+    dispatch(getDataTicket(movieID));
+  }, []);
   return (
-    <table
-      className="table table-secondary"
-      style={{ fontSize: "17px", borderRadius: "20px" }}
-    >
-      <thead>
-        <tr>
-          <th>Số ghế</th>
-          <th>Loại</th>
-          <th>Giá</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {seatSelected.map((item) => {
-          return (
-            <tr key={item.soGhe}>
-              <td>{item.soGhe}</td>
-              <td>{item.loai}</td>
-              <td>{item.gia.toLocaleString()}</td>
-              <td>
-                <button
-                  className="btn btn-danger btn-order"
-                  onClick={() => hanldeDelete(item.soGhe)}
-                >
-                  Hủy
-                </button>
-              </td>
-            </tr>
-          );
-        })}
-        <tr>
-          <td>
-            <b>Tổng tiền</b>
-          </td>
-          <td></td>
-          <td>
-            <b>
-              {seatSelected
-                .reduce((total, item) => {
-                  return (total += item.gia);
-                }, 0)
-                .toLocaleString()}
-            </b>
-          </td>
-          <td>
-            <button
-              className="btn btn-success btn-order"
-              disabled={seatSelected.length <= 0}
-              onClick={() => handleOrder(seatSelected)}
-            >
-              Thanh toán
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <>
+      <div>
+        <h1 className="text-center text-success mt-3">500000VND</h1>
+        <hr />
+      </div>
+      <div className={styles.dataInfor}>
+        <h6>cụm rạp:</h6>
+        <h6 className="text-success">BHD Star Cineplex - Phạm Hùng</h6>
+      </div>
+      <hr />
+      <div className={styles.dataInfor}>
+        <h6>Địa chỉ:</h6>
+        <h6 className="text-success">L4-Satra Phạm Hùng, C6/27 Phạm Hùng</h6>
+      </div>
+      <hr />
+      <div className={styles.dataInfor}>
+        <h6>Rạp:</h6>
+        <h6 className="text-success">Rạp 7</h6>
+      </div>
+      <hr />
+      <div className={styles.dataInfor}>
+        <h6>Ngày giờ chiếu:</h6>
+        <h6 className="text-success">03/11/2022 -08:11</h6>
+      </div>
+      <hr />
+      <div className={styles.dataInfor}>
+        <h6>Tên Phim:</h6>
+        <h6 className="text-success">Nhà Bà Nữ</h6>
+      </div>
+      <hr />
+      <div className={styles.dataInfor}>
+        <h6>Chọn:</h6>
+        <h6 className="text-success">Ghế 112, Ghế 134,</h6>
+      </div>
+      <hr />
+      <button className={styles.setButtonTicket} type="button">
+        ĐẶT VÉ
+      </button>
+    </>
   );
 }
 

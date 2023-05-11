@@ -2,25 +2,16 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./SeatBooking.module.scss";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCouch } from "@fortawesome/free-solid-svg-icons";
-import { faFontAwesome } from "@fortawesome/free-brands-svg-icons";
-import { library } from "@fortawesome/fontawesome-svg-core";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faCouch } from "@fortawesome/free-solid-svg-icons";
+// import { faFontAwesome } from "@fortawesome/free-brands-svg-icons";
+// import { library } from "@fortawesome/fontawesome-svg-core";
 
-library.add(faCouch, faFontAwesome);
+// library.add(faCouch, faFontAwesome);
 
 function SeatBooking() {
   const dispatch = useDispatch();
-  const { seatList } = useSelector((state) => {
-    return state.seatBooking;
-  });
-  const handleClick = (hang, soGhe) => {
-    dispatch({
-      type: "GHE_DANG_CHON",
-      hang,
-      soGhe,
-    });
-  };
+  
   return (
     <div className="container-fluid">
       <div className={styles.straightLine}></div>
@@ -44,30 +35,6 @@ function SeatBooking() {
         <span className="col text-center">15</span>
         <span className="col text-center">16</span>
       </div>
-      {seatList.map((item) => {
-        return (
-          <div className="row" key={item.seatList}>
-            <h5 className="col my-3">{item.hang}</h5>
-            {item.danhSachGhe.map((seat) => {
-              return (
-                <FontAwesomeIcon
-                  key={seat.soGhe}
-                  icon={["fas", "couch"]}
-                  className={
-                    seat.daDat
-                      ? "seat occupied col text-danger my-3"
-                      : seat.selected
-                      ? "seat selected col text-info my-3"
-                      : "seat col my-3"
-                  }
-                  onClick={() => handleClick(item.hang, seat.soGhe)}
-                  disabled={seat.daDat}
-                ></FontAwesomeIcon>
-              );
-            })}
-          </div>
-        );
-      })}
     </div>
   );
 }
