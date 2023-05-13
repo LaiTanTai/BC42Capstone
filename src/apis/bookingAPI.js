@@ -6,12 +6,7 @@ export const getDataTicket = createAsyncThunk(
   async (movieID, { dispatch, getState }) => {
     try {
       const response = await axiosClient.get(
-        `/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${movieID}`,
-        {
-          params: {
-            maNhom: "GP04",
-          },
-        }
+        `/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${movieID}`
       );
       return response.data;
     } catch (error) {

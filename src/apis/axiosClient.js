@@ -6,4 +6,15 @@ const axiosClient = axios.create({
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA0MiIsIkhldEhhblN0cmluZyI6IjMwLzA5LzIwMjMiLCJIZXRIYW5UaW1lIjoiMTY5NjAzMjAwMDAwMCIsIm5iZiI6MTY2NzA2MjgwMCwiZXhwIjoxNjk2MTc5NjAwfQ.i6JqYnGkwyHl6dkDHnjFWbPfBEl2l4SXAp4r7h9Ecpw",
   },
 });
+axiosClient.interceptors.request.use((config) => {
+  // config: chứa thông tin của request từ client gửi lên server
+
+  // Thêm key Authorization vào headers của request nếu user đã đăng nhập
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (user) {
+    config.headers.Authorization = `Bearer ${user.accessToken}`;
+  }
+
+  return config;
+});
 export default axiosClient;
