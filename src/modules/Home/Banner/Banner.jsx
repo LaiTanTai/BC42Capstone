@@ -6,6 +6,11 @@ import Carousel from 'react-bootstrap/Carousel';
 import { useState, useEffect } from 'react'
 function Banner() {
   const [Banner , setBanner]= useState([]);
+  const Videodemo = [
+    <iframe className='w-100' height="300" src="https://www.youtube.com/embed/8jraVtX821Q" title="BÀN TAY DIỆT QUỶ | TRAILER | KHỞI CHIẾU 09.04.2021" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>,
+    <iframe className="w-100" height="300" src="https://www.youtube.com/embed/kBY2k3G6LsM" title="LẬT MẶT: 48H - Ly Hai Production | Official Trailer | Khởi Chiếu 16.04.2021" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>,
+    <iframe className='w-100' height="300" src="https://www.youtube.com/embed/utjE8wTF0qE" title="MORTAL KOMBAT Official Trailer (2021)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>,
+  ]
   const [error,seterror] = useState()
   const getBanner = async () =>{
     try {
@@ -28,13 +33,23 @@ function Banner() {
           <div className='imageVideo'>
             <img className='image' src={item.hinhAnh}>
             </img>
-            <button className='button'><AiOutlinePlayCircle/></button>
+            <button className='button' data-bs-toggle="modal" data-bs-target={"#exampleModalCenter" + item.maBanner}><AiOutlinePlayCircle/></button>
+            <div className="modal fade" id={"exampleModalCenter" + item.maBanner} tabIndex={item.maBanner} aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content background-video">
+                  <div className="modal-body">
+                    <button type="button" className="btn video__button-modal" data-bs-dismiss="modal" aria-label="Close" >x</button>
+                    {Videodemo[item.maBanner-1]}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           </Carousel.Item>
         )
       })
     }
-    </Carousel>
+    </Carousel>   
   )
 }
 

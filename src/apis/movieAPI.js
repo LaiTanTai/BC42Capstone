@@ -4,7 +4,7 @@ import axiosClient from "./axiosClient";
 export const getmovieAPI = async()=>{
     const {data} = await axiosClient.get("/QuanLyPhim/LayDanhSachPhim",{
         params:{
-            maNhom:"GP01",
+            maNhom:"GP04",
         }
     })
     return data

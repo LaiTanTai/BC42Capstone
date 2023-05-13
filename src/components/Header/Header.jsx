@@ -29,7 +29,7 @@ function Header() {
   <div className="collapse navbar-collapse" id="navbarNav">
     <ul className="navbar-nav mr-auto">
       <li className="nav-item">
-        <a className='nav-link'>Trang Chủ</a>
+        <a className='nav-link' href='/'>Trang Chủ</a>
       </li>
       <li className="nav-item">
         <a href='#LichChieu' className='nav-link'>Lịch Chiếu</a>
@@ -40,7 +40,7 @@ function Header() {
     </ul>
     <ul className="navbar-nav">
       <li className="nav-item">
-        <MyNavLink to='/Signin'>
+        <MyNavLink to='/SignIn'>
           <BsBoxArrowInRight />
           Đăng nhập
         </MyNavLink>

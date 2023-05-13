@@ -1,0 +1,44 @@
+@import './../../Color/color.scss';
+.text{
+    font-weight: 700;
+    text-align: center;
+    color: $primary-color;
+    border-bottom: 2px solid $primary-color;
+}
+.button{
+    padding-top: 3px ;
+    padding-bottom: 3px ;
+    font-size: 13px;
+    width: 100%;
+    background-color: $primary-color;
+    border: 0px;
+    border-radius: 5px;
+    font-weight: 700;
+}
+.checkbox_div{
+    display: flex;
+    justify-content: left;
+    margin-bottom: 10px;
+}
+.label{
+    font-size: 12px;
+    font-weight: 700;
+}
+.input_div{
+    margin:5px 0px 5px 0px
+}
+.input{
+    height: 35px;
+    width: 100%;
+    margin: 5px 0px 5px 0px;
+}
+.span{
+    font-size: 12px;
+    margin-bottom: 2px;
+    margin-left: 10px;
+}
+.SignUpNav{
+    color: black;
+    font-size: 10px;
+    align-items: end;
+}

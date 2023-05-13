@@ -15,7 +15,7 @@ export const getCinematicByFilm = async(cinemaID)=>{
     const {data} = await axiosClient.get("/QuanLyRap/LayThongTinLichChieuHeThongRap",{
         params:{
             maHeThongRap:cinemaID,
-            maNhom:"GP01"
+            maNhom:"GP04"
         }
     })
     return data;
