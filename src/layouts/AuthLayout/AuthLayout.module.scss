@@ -1,0 +1,20 @@
+.background{
+    min-height: 100vh;
+    background-image: url("./../../../public/image/auth.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+}
+.container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.box{
+    width: 300px;
+    background-color: #fff;
+    padding:30px;
+    border-radius: 5%;
+}

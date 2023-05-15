@@ -1,0 +1,7 @@
+@import './../../Color/color.scss';
+.color{
+    font-weight: 700;
+    font-size: 20px;
+    color:$primary-color;
+    border-bottom: 2px solid $primary-color;
+}

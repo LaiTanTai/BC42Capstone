@@ -1,0 +1,7 @@
+$primary-color:#1d73a9;
+.modal-header{
+    background-color: $primary-color;
+    &>.modal-title{
+        font-weight: 700;
+    }
+}

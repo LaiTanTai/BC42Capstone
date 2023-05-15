@@ -1,0 +1,41 @@
+@import './../../Color/color.scss';
+
+.carousel-indicators{
+    .active{
+        background-color:$primary-color;
+        opacity: 1;
+    }
+}
+
+.imageVideo{
+    margin-top:62.35px;
+    position: relative;
+    .image{
+        width:100%;
+        height:400px;
+    }
+    .button{
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform: translate(-50%,-50%);
+        background-color: transparent;
+        border: 0;
+        font-size: 50px;
+        color:rgb(160, 154, 154);
+        transition: all 0.3s;
+    }
+    .button:hover{
+
+        color:$primary-color;
+    }
+}
+.background-video{
+    border: 0px;
+    background-color: transparent;
+    & .video__button-modal{
+        color: $primary-color;
+        font-size: 20px;
+        font-weight: 700;
+    }
+}
