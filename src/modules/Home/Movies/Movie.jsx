@@ -4,7 +4,6 @@ import './Movie.scss'
 import { getmovieAPI } from '../../../apis/movieAPI';
 import { Card} from 'antd';
 function Movie() {
-  const {Meta} = Card
   const [movies,setmovies] = useState([]);
   const navigate = useNavigate();
   const getMovies = async ()=>{

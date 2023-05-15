@@ -105,17 +105,19 @@ function Showtime() {
                                   <h6>{film.tenPhim}</h6>
                                   <div className='row'>
                                     {
-                                      film.lstLichChieuTheoPhim.map((value)=>{
-                                        return (
+                                      film.lstLichChieuTheoPhim.map((value,index)=>{
+                                        if(index < 4){
+                                          return (
                                           <a className="col-6 text-success" style={{fontSize:"10px"}}>{value.ngayChieuGioChieu}</a>
-                                        )
+                                          )
+                                        }
                                       })
                                     }
                                     <a className='text-danger' style={{fontSize:"10px"}}>Chi tiết</a>
                                   </div>
                                 </div>
                               </div>
-                            )
+                            )    
                           })
                         )
                       })
