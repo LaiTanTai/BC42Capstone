@@ -1,14 +1,37 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Modal, Button, Form } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { apiListUser } from "../../../apis/userAPI";
+import {
+  Container,
+  Row,
+  Col,
+  Modal,
+  Button,
+  Form,
+  Pagination,
+} from "react-bootstrap";
 import style from "./User.module.scss";
 import ButtonCss from "./../../../components/Button/ButtonCss";
 import Table from "react-bootstrap/Table";
 
 function User() {
+  const [listUser, setListUser] = useState([]);
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const getListUsers = async () => {
+    try {
+      const data = await apiListUser();
+      setListUser(data.content);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getListUsers();
+  }, []);
+
   return (
     <div className="user-background mt-5">
       <div>
@@ -80,7 +103,7 @@ function User() {
         <input placeholder="Tìm kiếm" className={style.timkiem}></input>
       </div>
       <div className="mt-4">
-        <Table striped bordered hover>
+        <Table bordered hover>
           <thead>
             <tr className="text-light text-center">
               <th>STT</th>
@@ -94,9 +117,41 @@ function User() {
               <th></th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody>
+            {listUser.map((item, index) => {
+              return (
+                <tr className="text-light text-center">
+                  <td>{index + 1}</td>
+                  <td>{item.taiKhoan}</td>
+                  <td>{item.matKhau}</td>
+                  <td>{item.hoTen}</td>
+                  <td>{item.soDT}</td>
+                  <td>{item.maLoaiNguoiDung}</td>
+                  <td>{item.email}</td>
+                  <td>
+                    <ButtonCss info={"Sửa"} />
+                  </td>
+                  <td>
+                    <ButtonCss info={"Xóa"} />
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
         </Table>
       </div>
+
+      <Pagination>
+        <Pagination.Ellipsis />
+        <Pagination.Prev />
+        <Pagination.Item active>{1}</Pagination.Item>
+        <Pagination.Item>{2}</Pagination.Item>
+        <Pagination.Item>{3}</Pagination.Item>
+        <Pagination.Item>{4}</Pagination.Item>
+        <Pagination.Item>{5}</Pagination.Item>
+        <Pagination.Next />
+        <Pagination.Ellipsis />
+      </Pagination>
     </div>
   );
 }
