@@ -10,8 +10,7 @@ function Booking() {
     <div>
       <div className="row" style={{ width: "100%" }}>
         <div className="col-8">
-          <SeatBooking />
-          ticket
+          <SeatBooking movieID={movieID} />
         </div>
         <div className="col-4" style={{ boxShadow: "0 0 5px grey" }}>
           <SeatBill movieID={movieID} />
