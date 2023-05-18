@@ -1,44 +1,103 @@
-import React from 'react'
-import styles from './SignIn.module.scss'
-import { useForm } from 'react-hook-form'
+import React from "react";
+import { useForm } from "react-hook-form";
+import { useSelector, useDispatch } from "react-redux";
+import { Navigate, useSearchParams } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { signin } from "./../../../slice/userSlice";
 
-function SignIn() {
-  const {register,handleSubmit} = useForm({
-    // declare initial value for inputs
-    defaultValues:{
-      taiKhoan:"",
-      MatKhau:"",
+// Định nghĩa các xác thực cho từng input
+const schema = yup.object({
+  taiKhoan: yup.string().required("Tài khoản không được để trống"),
+  matKhau: yup
+    .string()
+    .required("Mật khẩu không được để trống")
+});
+
+function Signin() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    // Khai báo các giá trị khởi tạo cho các input
+    defaultValues: {
+      taiKhoan: "",
+      matKhau: "",
     },
-  })
-  const onSubmit = (value)=>{
-    console.log(value);
+    mode: "onTouched",
+    // Khai báo schema validation bằng yup
+    resolver: yupResolver(schema),
+  });
+
+  const { user, isLoading, error } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const onSubmit = (values) => {
+    dispatch(signin(values));
+  };
+
+  const onError = (errors) => {
+    console.log(errors);
+  };
+
+  // Kiểm tra nếu có thông tin user => đã đăng nhập => điều hướng về trang Home
+  if (user) {
+    const url = searchParams.get("redirectUrl") || "/";
+    return <Navigate to={url} />;
   }
+
   return (
-    <div> 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <h4 className={styles.text}>Đăng Nhập</h4>
-        <div className={styles.input_div}>
-          <label className={styles.label}>Tài Khoản</label>
-          <input className={styles.input} type='text' placeholder='Tài Khoản' {...register("taikhoan")}></input>
-        </div>
-        <div className={styles.input_div}>
-          <label className={styles.label}>Mật Khẩu</label>
+    <div>
+      <h1>Đăng Nhập</h1>
+
+      <form onSubmit={handleSubmit(onSubmit, onError)}>
+        <div>
           <input
-            className={styles.input}
-            type='password'
-            placeholder='Mật khẩu'
-            {...register("MatKhau")}
+            type="text"
+            placeholder="Tài Khoản"
+            {...register("taiKhoan")}
+
+            // {...register("taiKhoan", {
+            //   required: {
+            //     value: true,
+            //     message: "Tài khoản không được để trống",
+            //   },
+            // })}
           />
+          {errors.taiKhoan && <p>{errors.taiKhoan.message}</p>}
         </div>
-        <div className={styles.checkbox_div}>
-          <input type='checkbox'/>
-          <p className={styles.span}>Nhớ mật khẩu</p>
+
+        <div>
+          <input
+            type="password"
+            placeholder="Mật khẩu"
+            {...register("matKhau")}
+
+            // {...register("matKhau", {
+            //   required: {
+            //     value: true,
+            //     message: "Mật khẩu không được để trống",
+            //   },
+            //   pattern: {
+            //     value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+            //     message:
+            //       "Mật khẩu ít nhất 8 kí tự, phải có 1 chữ hoa, 1 chữ thường và 1 số",
+            //   },
+            // })}
+          />
+          {errors.matKhau && <p>{errors.matKhau.message}</p>}
         </div>
-        <button className={styles.button}>Đăng Nhập</button>
-        <a href='/SignUp' className={styles.SignUpNav}>Bạn chưa có tài khoản? Đăng ký</a>
+
+        {/* Hiển thị lỗi servert trả về. VD: trường hợp sai tài khoản hoặc mật khẩu */}
+        {error && <p>{error}</p>}
+
+        <button disabled={isLoading}>Dang Nhap</button>
       </form>
     </div>
-  )
+  );
 }
 
-export default SignIn
+export default Signin;
