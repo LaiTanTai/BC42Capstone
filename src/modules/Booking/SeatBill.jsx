@@ -9,15 +9,14 @@ function SeatBill({ movieID }) {
   const { dataTicket, isLoading, error } = useSelector(
     (state) => state.getDataTicketReducer
   );
-  console.log(dataTicket);
   const infoTicket = dataTicket?.content?.thongTinPhim;
   useEffect(() => {
     dispatch(getDataTicket(movieID));
   }, []);
 
   const RenderInfoTicket = () => {
-    if (isLoading) return <h1>Loading...</h1>;
-    if (error) return <h1>error</h1>;
+    if (isLoading) return <h1 className="text-center text-success">Loading...</h1>;
+    if (error) return <h1 className="text-center text-danger">error</h1>;
     if (dataTicket)
       return (
         <>

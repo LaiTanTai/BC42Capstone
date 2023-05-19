@@ -17,29 +17,34 @@ function SeatBooking({ movieID }) {
   );
 
   console.log(dataTicket);
-
   useEffect(() => {
     dispatch(getDataTicket(movieID));
   }, []);
 
   const RenderBookingTicket = () => {
-    if (isLoading) return <h1>Loading...</h1>;
-    if (error) return <h1>error</h1>;
+    if (isLoading)
+      return <h1 className="text-center text-success">Loading...</h1>;
+    if (error) return <h1 className="text-center text-danger">error</h1>;
     if (dataTicket) {
       return (
         <div style={{ marginLeft: "73px" }}>
-          {dataTicket.content.danhSachGhe.map((item) => (
-            <div className={styles.maGhe} key={item.maGhe}>
-              <button
-                className={styles.tenGhe}
-                type="button"
-                icon={faCouch}
-                key={item.tenGhe}
-              >
-                {item.tenGhe}
-              </button>
-            </div>
-          ))}
+          {dataTicket?.content?.danhSachGhe.map((item, index) => {
+            let classGheVip = item.
+            return (
+              <div className={styles.maGhe} key={index}>
+                {item.loaiGhe === "Vip" ? (
+                  <button key={index} type="button" className={styles.gheVip}>
+                    {item.tenGhe}
+                  </button>
+                ) : (
+                  <button className={styles.ghe} type="button" key={index}>
+                    {item.tenGhe}
+                  </button>
+                )}
+                {(index + 1) % 16 === 0 ? <br /> : ""}
+              </div>
+            );
+          })}
         </div>
       );
     }
