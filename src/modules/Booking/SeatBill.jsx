@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./SeatBill.module.scss";
 import { getDataTicket } from "../../apis/bookingAPI";
+import { BOOKING_DAT_VE } from "./redux/getDataTicketSlice";
 
 function SeatBill({ movieID }) {
   const dispatch = useDispatch();
 
-  const { dataTicket, isLoading, error, danhSachGheDaDat } = useSelector(
-    (state) => state.getDataTicketReducer
-  );
+  const { dataTicket, isLoading, error, danhSachGheDangDat, payTicket } =
+    useSelector((state) => state.getDataTicketReducer);
   const infoTicket = dataTicket?.content?.thongTinPhim;
   useEffect(() => {
     dispatch(getDataTicket(movieID));
@@ -54,23 +54,32 @@ function SeatBill({ movieID }) {
   return (
     <>
       <div>
-        <h1 className="text-center text-success mt-3">500000VND</h1>
+        <h1 className="text-center text-success mt-3">{`${payTicket.toLocaleString()}đ `}</h1>
         <hr />
       </div>
       <RenderInfoTicket />
-      <div className={styles.dataInfor}>
-        <h6>Chọn:</h6>
-        {danhSachGheDaDat.map((gheDD, index) => {
+      <div>
+        <h6 className="text-center">Chọn:</h6>
+        {danhSachGheDangDat.map((gheDD, index) => {
           return (
-            <h6 key={index} className="text-success">
-              {gheDD.stt},
-            </h6>
+            <>
+              <h5 key={index} className="text-success d-inline">
+                {gheDD.stt},
+              </h5>
+              {(index + 1) % 16 === 0 ? <br /> : ""}
+            </>
           );
         })}
         {/* <h6 className="text-success">Ghế 112, Ghế 134,</h6> */}
       </div>
       <hr />
-      <button className={styles.setButtonTicket} type="button">
+      <button
+        className={styles.setButtonTicket}
+        type="button"
+        onClick={() => {
+          dispatch(BOOKING_DAT_VE);
+        }}
+      >
         ĐẶT VÉ
       </button>
     </>

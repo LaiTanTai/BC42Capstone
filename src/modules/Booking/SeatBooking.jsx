@@ -10,7 +10,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 function SeatBooking({ movieID }) {
   const dispatch = useDispatch();
-  const { dataTicket, isLoading, error, danhSachGheDaDat } = useSelector(
+  const { dataTicket, isLoading, error, danhSachGheDangDat } = useSelector(
     (state) => state.getDataTicketReducer
   );
 
@@ -30,7 +30,7 @@ function SeatBooking({ movieID }) {
             let classGheDaDat = item.daDat === true ? "gheDaDat" : "";
 
             let classGheDangDat = "";
-            let indexGheDangDat = danhSachGheDaDat.findIndex(
+            let indexGheDangDat = danhSachGheDangDat.findIndex(
               (gheDD) => gheDD.maGhe === item.maGhe
             );
             if (indexGheDangDat !== -1) {
@@ -40,12 +40,12 @@ function SeatBooking({ movieID }) {
               <div className={styles.maGhe} key={index}>
                 <button
                   onClick={() => {
-                    dispatch(BOOKING_DAT_VE({ payload: item }));
+                    dispatch(BOOKING_DAT_VE(item));
                   }}
                   disabled={item.daDat}
                   key={index}
                   type="button"
-                  className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat}}`}
+                  className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat}`}
                 >
                   {item.daDat ? <FontAwesomeIcon icon={faXmark} /> : item.stt}
                 </button>

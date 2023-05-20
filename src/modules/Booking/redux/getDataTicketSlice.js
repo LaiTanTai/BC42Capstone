@@ -4,31 +4,31 @@ const initialState = {
   dataTicket: null,
   isLoading: false,
   error: null,
-  danhSachGheDaDat: [
-    {
-      maGhe: 57323,
-      tenGhe: "03",
-      maRap: 513,
-      loaiGhe: "Thuong",
-      stt: "03",
-      giaVe: 75000,
-      daDat: false,
-      taiKhoanNguoiDat: null,
-    },
-  ],
+  danhSachGheDangDat: [],
+  payTicket: 0,
 };
 const bookingSlice = createSlice({
   name: "booking",
   initialState,
   reducers: {
     BOOKING_DAT_VE: (state, action) => {
-      let danhSachGheCapNhat = [...state.danhSachGheDaDat];
-      let danhSachGheMoi = danhSachGheCapNhat.filter(
-        (item) => item.maGhe !== action.payload.maGhe
+      let pay = state.payTicket;
+      let danhSachGheCapNhat = [...state.danhSachGheDangDat];
+      let index = danhSachGheCapNhat.findIndex(
+        (item) => item.maGhe === action.payload.maGhe
       );
-      console.log(danhSachGheMoi);
-
-      return { ...state, danhSachGheDaDat: danhSachGheMoi };
+      if (index !== -1) {
+        danhSachGheCapNhat.splice(index, 1);
+        pay = pay - action.payload.giaVe;
+      } else {
+        danhSachGheCapNhat.push(action.payload);
+        pay = pay + action.payload.giaVe;
+      }
+      return {
+        ...state,
+        danhSachGheDangDat: danhSachGheCapNhat,
+        payTicket: pay,
+      };
     },
   },
   extraReducers: (builder) => {

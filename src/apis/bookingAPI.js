@@ -14,4 +14,14 @@ export const getDataTicket = createAsyncThunk(
     }
   }
 );
-console.log(getDataTicket);
+export const postDataTicket = createAsyncThunk(
+  "booking/postData_ticket",
+  async ({ dispatch, getState }) => {
+    try {
+      const response = await axiosClient.post(`/QuanLyDatVe/DatVe`);
+      return response.data;
+    } catch (error) {
+      throw error.response.data.message;
+    }
+  }
+);
