@@ -20,7 +20,7 @@ function Movieinfo({ movieId }) {
     getMovieDetails();
   }, []);
   return (
-    <div className={styles.movieFrame}>
+    <div className={`${styles.movieFrame} container`}>
       <div className="row" style={{ height: "100%" }}>
         <div className="col-8">
           <ReactPlayer

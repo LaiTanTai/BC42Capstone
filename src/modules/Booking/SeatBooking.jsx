@@ -2,13 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./SeatBooking.module.scss";
 import { getDataTicket } from "../../apis/bookingAPI";
+import "./SeatBooking.scss";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCouch } from "@fortawesome/free-solid-svg-icons";
-import { faFontAwesome } from "@fortawesome/free-brands-svg-icons";
-import { library } from "@fortawesome/fontawesome-svg-core";
-
-library.add(faCouch, faFontAwesome);
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 function SeatBooking({ movieID }) {
   const dispatch = useDispatch();
@@ -29,18 +26,18 @@ function SeatBooking({ movieID }) {
       return (
         <div style={{ marginLeft: "73px" }}>
           {dataTicket?.content?.danhSachGhe.map((item, index) => {
-            let classGheVip = item.
+            let classGheVip = item.loaiGhe === "Vip" ? "gheVip" : "";
+            let classGheDat = item.daDat === true ? "gheDaDat" : "";
             return (
               <div className={styles.maGhe} key={index}>
-                {item.loaiGhe === "Vip" ? (
-                  <button key={index} type="button" className={styles.gheVip}>
-                    {item.tenGhe}
-                  </button>
-                ) : (
-                  <button className={styles.ghe} type="button" key={index}>
-                    {item.tenGhe}
-                  </button>
-                )}
+                <button
+                  disabled={item.daDat}
+                  key={index}
+                  type="button"
+                  className={`ghe ${classGheVip} ${classGheDat}`}
+                >
+                  {item.daDat ? <FontAwesomeIcon icon={faXmark} /> : item.stt}
+                </button>
                 {(index + 1) % 16 === 0 ? <br /> : ""}
               </div>
             );
