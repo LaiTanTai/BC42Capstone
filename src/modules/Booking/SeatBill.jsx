@@ -6,7 +6,7 @@ import { getDataTicket } from "../../apis/bookingAPI";
 function SeatBill({ movieID }) {
   const dispatch = useDispatch();
 
-  const { dataTicket, isLoading, error } = useSelector(
+  const { dataTicket, isLoading, error, danhSachGheDaDat } = useSelector(
     (state) => state.getDataTicketReducer
   );
   const infoTicket = dataTicket?.content?.thongTinPhim;
@@ -15,7 +15,8 @@ function SeatBill({ movieID }) {
   }, []);
 
   const RenderInfoTicket = () => {
-    if (isLoading) return <h1 className="text-center text-success">Loading...</h1>;
+    if (isLoading)
+      return <h1 className="text-center text-success">Loading...</h1>;
     if (error) return <h1 className="text-center text-danger">error</h1>;
     if (dataTicket)
       return (
@@ -56,10 +57,17 @@ function SeatBill({ movieID }) {
         <h1 className="text-center text-success mt-3">500000VND</h1>
         <hr />
       </div>
-      <RenderInfoTicket/>
+      <RenderInfoTicket />
       <div className={styles.dataInfor}>
         <h6>Chọn:</h6>
-        <h6 className="text-success">Ghế 112, Ghế 134,</h6>
+        {danhSachGheDaDat.map((gheDD, index) => {
+          return (
+            <h6 key={index} className="text-success">
+              {gheDD.stt},
+            </h6>
+          );
+        })}
+        {/* <h6 className="text-success">Ghế 112, Ghế 134,</h6> */}
       </div>
       <hr />
       <button className={styles.setButtonTicket} type="button">

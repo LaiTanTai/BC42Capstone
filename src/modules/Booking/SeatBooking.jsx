@@ -3,17 +3,17 @@ import { useSelector, useDispatch } from "react-redux";
 import styles from "./SeatBooking.module.scss";
 import { getDataTicket } from "../../apis/bookingAPI";
 import "./SeatBooking.scss";
+import { BOOKING_DAT_VE } from "./redux/getDataTicketSlice";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 function SeatBooking({ movieID }) {
   const dispatch = useDispatch();
-  const { dataTicket, isLoading, error } = useSelector(
+  const { dataTicket, isLoading, error, danhSachGheDaDat } = useSelector(
     (state) => state.getDataTicketReducer
   );
 
-  console.log(dataTicket);
   useEffect(() => {
     dispatch(getDataTicket(movieID));
   }, []);
@@ -27,14 +27,25 @@ function SeatBooking({ movieID }) {
         <div style={{ marginLeft: "73px" }}>
           {dataTicket?.content?.danhSachGhe.map((item, index) => {
             let classGheVip = item.loaiGhe === "Vip" ? "gheVip" : "";
-            let classGheDat = item.daDat === true ? "gheDaDat" : "";
+            let classGheDaDat = item.daDat === true ? "gheDaDat" : "";
+
+            let classGheDangDat = "";
+            let indexGheDangDat = danhSachGheDaDat.findIndex(
+              (gheDD) => gheDD.maGhe === item.maGhe
+            );
+            if (indexGheDangDat !== -1) {
+              classGheDaDat = "gheDangDat";
+            }
             return (
               <div className={styles.maGhe} key={index}>
                 <button
+                  onClick={() => {
+                    dispatch(BOOKING_DAT_VE({ payload: item }));
+                  }}
                   disabled={item.daDat}
                   key={index}
                   type="button"
-                  className={`ghe ${classGheVip} ${classGheDat}`}
+                  className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat}}`}
                 >
                   {item.daDat ? <FontAwesomeIcon icon={faXmark} /> : item.stt}
                 </button>
