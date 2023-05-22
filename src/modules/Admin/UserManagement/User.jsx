@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { apiListUser } from "../../../apis/userAPI";
+import { apiListUser, apiAddUser } from "../../../apis/userAPI";
+import { useForm } from "react-hook-form";
 import {
   Container,
   Row,
@@ -16,8 +17,35 @@ import Table from "react-bootstrap/Table";
 function User() {
   const [listUser, setListUser] = useState([]);
   const [show, setShow] = useState(false);
+  const [showFix, setShowFix] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleChooseUser = (index) => {
+    setShowFix(true);
+    const clickedUser = listUser.find((user, index) => index === index);
+    console.log(clickedUser);
+  };
+
+  const { register, handleSubmit } = useForm({
+    // declare initial value for inputs
+    defaultValues: {
+      taiKhoan: "",
+      MatKhau: "",
+      email: "",
+      soDt: "",
+      maNhom: "",
+      maLoaiNguoiDung: "",
+      hoTen: "",
+    },
+  });
+  const onSubmit = async (value) => {
+    try {
+      const data = await apiAddUser(value);
+    } catch (error) {
+      console.log(error);
+    }
+    handleClose();
+  };
 
   const getListUsers = async () => {
     try {
@@ -30,7 +58,7 @@ function User() {
 
   useEffect(() => {
     getListUsers();
-  }, []);
+  }, [listUser]);
 
   return (
     <div className="user-background mt-5">
@@ -49,23 +77,33 @@ function User() {
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridEmail">
                   <Form.Label className="text-light">Tài Khoản</Form.Label>
-                  <Form.Control placeholder="Tài Khoản" />
+                  <Form.Control
+                    placeholder="Tài Khoản"
+                    {...register("taiKhoan")}
+                  />
                 </Form.Group>
                 <Form.Group as={Col} controlId="formGridPassword">
                   <Form.Label className="text-light">Mật Khẩu</Form.Label>
-                  <Form.Control placeholder="Mật Khẩu" type="password" />
+                  <Form.Control
+                    placeholder="Mật Khẩu"
+                    type="password"
+                    {...register("MatKhau")}
+                  />
                 </Form.Group>
               </Row>
 
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridEmail">
                   <Form.Label className="text-light">Họ Tên</Form.Label>
-                  <Form.Control placeholder="Họ Tên" />
+                  <Form.Control placeholder="Họ Tên" {...register("hoTen")} />
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridEmail">
                   <Form.Label className="text-light">Số Điện Thoại</Form.Label>
-                  <Form.Control placeholder="ví dụ: 08xxxxxxx" />
+                  <Form.Control
+                    placeholder="ví dụ: 08xxxxxxx"
+                    {...register("soDt")}
+                  />
                 </Form.Group>
               </Row>
 
@@ -74,19 +112,26 @@ function User() {
                   <Form.Label className="text-light">
                     Mã Loại Người Dùng
                   </Form.Label>
-                  <Form.Control placeholder="Mã Loại Người Dùng" />
+                  <Form.Control
+                    placeholder="Mã Loại Người Dùng"
+                    {...register("maLoaiNguoiDung")}
+                  />
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridEmail">
                   <Form.Label className="text-light">Mã Nhóm</Form.Label>
-                  <Form.Control placeholder="Mã Nhóm" />
+                  <Form.Control placeholder="Mã Nhóm" {...register("maNhom")} />
                 </Form.Group>
               </Row>
 
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridEmail">
                   <Form.Label className="text-light">Email</Form.Label>
-                  <Form.Control placeholder="Email" type="email" />
+                  <Form.Control
+                    placeholder="Email"
+                    type="email"
+                    {...register("email")}
+                  />
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridEmail"></Form.Group>
@@ -95,7 +140,10 @@ function User() {
           </Modal.Body>
           <Modal.Footer>
             <ButtonCss info={"Đóng"} handleClick={handleClose} />
-            <ButtonCss info={"Thêm người dùng"} />
+            <ButtonCss
+              info={"Thêm người dùng"}
+              handleClick={handleSubmit(onSubmit)}
+            />
           </Modal.Footer>
         </Modal>
       </div>
@@ -129,7 +177,116 @@ function User() {
                   <td>{item.maLoaiNguoiDung}</td>
                   <td>{item.email}</td>
                   <td>
-                    <ButtonCss info={"Sửa"} />
+                    <ButtonCss
+                      info={"Sửa"}
+                      handleClick={(index) => handleChooseUser(index)}
+                    />
+                    <Modal
+                      className="Modal-background"
+                      show={showFix}
+                      onHide={() => setShowFix(false)}
+                    >
+                      <Modal.Header className="text-light">
+                        <Modal.Title>Sửa thông tin người dùng</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <Form>
+                          <Row className="mb-3">
+                            <Form.Group as={Col} controlId="formGridEmail">
+                              <Form.Label className="text-light">
+                                Tài Khoản
+                              </Form.Label>
+                              <Form.Control
+                                placeholder="Tài Khoản"
+                                {...register("taiKhoan")}
+                              />
+                            </Form.Group>
+                            <Form.Group as={Col} controlId="formGridPassword">
+                              <Form.Label className="text-light">
+                                Mật Khẩu
+                              </Form.Label>
+                              <Form.Control
+                                placeholder="Mật Khẩu"
+                                type="password"
+                                {...register("MatKhau")}
+                              />
+                            </Form.Group>
+                          </Row>
+
+                          <Row className="mb-3">
+                            <Form.Group as={Col} controlId="formGridEmail">
+                              <Form.Label className="text-light">
+                                Họ Tên
+                              </Form.Label>
+                              <Form.Control
+                                placeholder="Họ Tên"
+                                {...register("hoTen")}
+                              />
+                            </Form.Group>
+
+                            <Form.Group as={Col} controlId="formGridEmail">
+                              <Form.Label className="text-light">
+                                Số Điện Thoại
+                              </Form.Label>
+                              <Form.Control
+                                placeholder="ví dụ: 08xxxxxxx"
+                                {...register("soDt")}
+                              />
+                            </Form.Group>
+                          </Row>
+
+                          <Row className="mb-3">
+                            <Form.Group as={Col} controlId="formGridEmail">
+                              <Form.Label className="text-light">
+                                Mã Loại Người Dùng
+                              </Form.Label>
+                              <Form.Control
+                                placeholder="Mã Loại Người Dùng"
+                                {...register("maLoaiNguoiDung")}
+                              />
+                            </Form.Group>
+
+                            <Form.Group as={Col} controlId="formGridEmail">
+                              <Form.Label className="text-light">
+                                Mã Nhóm
+                              </Form.Label>
+                              <Form.Control
+                                placeholder="Mã Nhóm"
+                                {...register("maNhom")}
+                              />
+                            </Form.Group>
+                          </Row>
+
+                          <Row className="mb-3">
+                            <Form.Group as={Col} controlId="formGridEmail">
+                              <Form.Label className="text-light">
+                                Email
+                              </Form.Label>
+                              <Form.Control
+                                placeholder="Email"
+                                type="email"
+                                {...register("email")}
+                              />
+                            </Form.Group>
+
+                            <Form.Group
+                              as={Col}
+                              controlId="formGridEmail"
+                            ></Form.Group>
+                          </Row>
+                        </Form>{" "}
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <ButtonCss
+                          info={"Đóng"}
+                          handleClick={() => setShowFix(false)}
+                        />
+                        <ButtonCss
+                          info={"Thêm người dùng"}
+                          handleClick={handleSubmit(onSubmit)}
+                        />
+                      </Modal.Footer>
+                    </Modal>
                   </td>
                   <td>
                     <ButtonCss info={"Xóa"} />

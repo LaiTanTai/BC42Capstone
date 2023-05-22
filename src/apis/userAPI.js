@@ -1,4 +1,5 @@
 import axiosClient from "./axiosClient";
+import axiosAdmin from "./axiosAdmin";
 
 export const apiSignin = async (values) => {
   const { data } = await axiosClient.post("/QuanLyNguoiDung/DangNhap", values);
@@ -6,18 +7,24 @@ export const apiSignin = async (values) => {
 };
 
 export const apiSignup = async (values) => {
-  const payload = { ...values, maNhom: "GP01" };
+  const payload = { ...values, maNhom: "GP04" };
 
   const { data } = await axiosClient.post("/QuanLyNguoiDung/DangKy", payload);
   return data;
 };
 
 export const apiListUser = async () => {
-  const payload = { MaNhom: "GP04" };
-
   const { data } = await axiosClient.get(
     "/QuanLyNguoiDung/LayDanhSachNguoiDung",
-    payload
+    { params: { MaNhom: "GP04" } }
+  );
+  return data;
+};
+
+export const apiAddUser = async (values) => {
+  const { data } = await axiosAdmin.post(
+    "/QuanLyNguoiDung/ThemNguoiDung",
+    values
   );
   return data;
 };
