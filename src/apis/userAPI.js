@@ -22,9 +22,19 @@ export const apiListUser = async () => {
 };
 
 export const apiAddUser = async (values) => {
+  const payload = { ...values, maNhom: "GP04" };
   const { data } = await axiosAdmin.post(
     "/QuanLyNguoiDung/ThemNguoiDung",
-    values
+    payload
+  );
+  return data;
+};
+
+export const apiUpdateUser = async (values) => {
+  const payload = { ...values, maNhom: "GP04" };
+  const { data } = await axiosAdmin.put(
+    "/QuanLyNguoiDung/CapNhatThongTinNguoiDung",
+    payload
   );
   return data;
 };

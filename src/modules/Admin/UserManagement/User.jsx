@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { apiListUser, apiAddUser } from "../../../apis/userAPI";
+import { apiListUser, apiAddUser, apiUpdateUser } from "../../../apis/userAPI";
 import { useForm } from "react-hook-form";
 import {
   Container,
@@ -16,13 +16,17 @@ import Table from "react-bootstrap/Table";
 
 function User() {
   const [listUser, setListUser] = useState([]);
+  const [updateUser, setUpdatetUser] = useState({});
   const [show, setShow] = useState(false);
   const [showFix, setShowFix] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const handleChooseUser = (index) => {
+  const handleChooseUser = (item) => {
     setShowFix(true);
-    const clickedUser = listUser.find((user, index) => index === index);
+    const clickedUser = listUser.find(
+      (user) => user.taiKhoan === item.taiKhoan
+    );
+    setUpdatetUser(clickedUser);
     console.log(clickedUser);
   };
 
@@ -38,9 +42,20 @@ function User() {
       hoTen: "",
     },
   });
+
   const onSubmit = async (value) => {
     try {
       const data = await apiAddUser(value);
+    } catch (error) {
+      console.log(error);
+    }
+    handleClose();
+  };
+
+  const onUpdate = async (value) => {
+    console.log(value);
+    try {
+      const data = await apiUpdateUser(value);
     } catch (error) {
       console.log(error);
     }
@@ -179,7 +194,9 @@ function User() {
                   <td>
                     <ButtonCss
                       info={"Sửa"}
-                      handleClick={(index) => handleChooseUser(index)}
+                      handleClick={() => {
+                        handleChooseUser(item);
+                      }}
                     />
                     <Modal
                       className="Modal-background"
@@ -197,7 +214,7 @@ function User() {
                                 Tài Khoản
                               </Form.Label>
                               <Form.Control
-                                placeholder="Tài Khoản"
+                                placeholder={updateUser.taiKhoan}
                                 {...register("taiKhoan")}
                               />
                             </Form.Group>
@@ -206,8 +223,8 @@ function User() {
                                 Mật Khẩu
                               </Form.Label>
                               <Form.Control
-                                placeholder="Mật Khẩu"
                                 type="password"
+                                placeholder={updateUser.matKhau}
                                 {...register("MatKhau")}
                               />
                             </Form.Group>
@@ -219,7 +236,7 @@ function User() {
                                 Họ Tên
                               </Form.Label>
                               <Form.Control
-                                placeholder="Họ Tên"
+                                placeholder={updateUser.hoTen}
                                 {...register("hoTen")}
                               />
                             </Form.Group>
@@ -229,7 +246,7 @@ function User() {
                                 Số Điện Thoại
                               </Form.Label>
                               <Form.Control
-                                placeholder="ví dụ: 08xxxxxxx"
+                                placeholder={updateUser.soDt}
                                 {...register("soDt")}
                               />
                             </Form.Group>
@@ -241,7 +258,7 @@ function User() {
                                 Mã Loại Người Dùng
                               </Form.Label>
                               <Form.Control
-                                placeholder="Mã Loại Người Dùng"
+                                placeholder={updateUser.maLoaiNguoiDung}
                                 {...register("maLoaiNguoiDung")}
                               />
                             </Form.Group>
@@ -250,10 +267,7 @@ function User() {
                               <Form.Label className="text-light">
                                 Mã Nhóm
                               </Form.Label>
-                              <Form.Control
-                                placeholder="Mã Nhóm"
-                                {...register("maNhom")}
-                              />
+                              <Form.Control value="GP04" />
                             </Form.Group>
                           </Row>
 
@@ -263,8 +277,8 @@ function User() {
                                 Email
                               </Form.Label>
                               <Form.Control
-                                placeholder="Email"
                                 type="email"
+                                placeholder={updateUser.email}
                                 {...register("email")}
                               />
                             </Form.Group>
@@ -282,8 +296,8 @@ function User() {
                           handleClick={() => setShowFix(false)}
                         />
                         <ButtonCss
-                          info={"Thêm người dùng"}
-                          handleClick={handleSubmit(onSubmit)}
+                          info={"Cập nhật thông tin"}
+                          handleClick={handleSubmit(onUpdate)}
                         />
                       </Modal.Footer>
                     </Modal>
