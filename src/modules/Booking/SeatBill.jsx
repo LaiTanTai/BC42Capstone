@@ -1,17 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./SeatBill.module.scss";
-import { getDataTicket } from "../../apis/bookingAPI";
+import { getDataTicket, postDataTicket } from "../../apis/bookingAPI";
 import { BOOKING_DAT_VE } from "./redux/getDataTicketSlice";
+import { BOOKING_POST_DATA } from "./redux/postDataTicketSlice";
 
 function SeatBill({ movieID }) {
   const dispatch = useDispatch();
 
   const { dataTicket, isLoading, error, danhSachGheDangDat, payTicket } =
     useSelector((state) => state.getDataTicketReducer);
+  let maGhe = 0;
+  let giaVe = 0;
+  
+  const getListTicket = () => {
+    danhSachGheDangDat.map((infoItem) => {
+      maGhe = infoItem.maGhe;
+      giaVe = infoItem.giaVe;
+    });
+  };
   const infoTicket = dataTicket?.content?.thongTinPhim;
   useEffect(() => {
     dispatch(getDataTicket(movieID));
+    dispatch(postDataTicket());
   }, []);
 
   const RenderInfoTicket = () => {
@@ -62,22 +73,23 @@ function SeatBill({ movieID }) {
         <h6 className="text-center">Chọn:</h6>
         {danhSachGheDangDat.map((gheDD, index) => {
           return (
-            <>
+            <Fragment key={index}>
               <h5 key={index} className="text-success d-inline">
                 {gheDD.stt},
               </h5>
               {(index + 1) % 16 === 0 ? <br /> : ""}
-            </>
+            </Fragment>
           );
         })}
-        {/* <h6 className="text-success">Ghế 112, Ghế 134,</h6> */}
       </div>
       <hr />
+
       <button
         className={styles.setButtonTicket}
         type="button"
         onClick={() => {
-          dispatch(BOOKING_DAT_VE);
+          getListTicket();
+          dispatch(BOOKING_POST_DATA({ movieID, maGhe, giaVe }));
         }}
       >
         ĐẶT VÉ
