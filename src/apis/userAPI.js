@@ -38,3 +38,17 @@ export const apiUpdateUser = async (values) => {
   );
   return data;
 };
+
+export const apiDeleteUser = async (values) => {
+  const { data } = await axiosAdmin.delete("/QuanLyNguoiDung/XoaNguoiDung", {
+    params: { TaiKhoan: values },
+  });
+  return data;
+};
+
+export const apiSearchUser = async (values) => {
+  const { data } = await axiosClient.get("/QuanLyNguoiDung/TimKiemNguoiDung", {
+    params: { tuKhoa: values, MaNhom: "GP04" },
+  });
+  return data;
+};

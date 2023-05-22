@@ -1,5 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { apiListUser, apiAddUser, apiUpdateUser } from "../../../apis/userAPI";
+import React, { useRef, useState, useEffect } from "react";
+import {
+  apiListUser,
+  apiAddUser,
+  apiUpdateUser,
+  apiDeleteUser,
+  apiSearchUser,
+} from "../../../apis/userAPI";
 import { useForm } from "react-hook-form";
 import {
   Container,
@@ -52,14 +58,42 @@ function User() {
     handleClose();
   };
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const inputRef = useRef();
+  const timeoutRef = useRef();
+
+  const handleSearch = (evt) => {
+    setSearchTerm(evt.target.value);
+    clearTimeout(timeoutRef.current);
+
+    timeoutRef.current = setTimeout(async () => {
+      console.log(evt.target.value);
+      const data = await apiSearchUser(evt.target.value);
+      setListUser(data.content);
+      console.log("data", listUser);
+    }, 1000);
+  };
+
+  useEffect(() => {
+    console.log(inputRef.current);
+    inputRef.current.focus();
+  }, []);
+
+  const handleDelete = async (item) => {
+    try {
+      const data = await apiDeleteUser(item.taiKhoan);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const onUpdate = async (value) => {
-    console.log(value);
     try {
       const data = await apiUpdateUser(value);
     } catch (error) {
       console.log(error);
     }
-    handleClose();
+    setShowFix(false);
   };
 
   const getListUsers = async () => {
@@ -73,7 +107,7 @@ function User() {
 
   useEffect(() => {
     getListUsers();
-  }, [listUser]);
+  }, []);
 
   return (
     <div className="user-background mt-5">
@@ -163,7 +197,13 @@ function User() {
         </Modal>
       </div>
       <div>
-        <input placeholder="Tìm kiếm" className={style.timkiem}></input>
+        <input
+          ref={inputRef}
+          placeholder="Tìm kiếm"
+          className={style.timkiem}
+          value={searchTerm}
+          onChange={handleSearch}
+        ></input>
       </div>
       <div className="mt-4">
         <Table bordered hover>
@@ -246,7 +286,7 @@ function User() {
                                 Số Điện Thoại
                               </Form.Label>
                               <Form.Control
-                                placeholder={updateUser.soDt}
+                                placeholder={updateUser.soDT}
                                 {...register("soDt")}
                               />
                             </Form.Group>
@@ -303,7 +343,10 @@ function User() {
                     </Modal>
                   </td>
                   <td>
-                    <ButtonCss info={"Xóa"} />
+                    <ButtonCss
+                      info={"Xóa"}
+                      handleClick={() => handleDelete(item)}
+                    />
                   </td>
                 </tr>
               );
