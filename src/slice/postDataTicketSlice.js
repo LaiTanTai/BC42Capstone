@@ -13,11 +13,9 @@ const infoPostTicketSlice = createSlice({
   initialState,
   reducers: {
     BOOKING_POST_DATA: (state, action) => {
-      const { movieID, maGhe, giaVe } = action.payload;
+      const { movieID, danhSachVe } = action.payload;
       let maLichChieu = movieID;
-      
-      console.log(movieID);
-      return { ...state, maLichChieu, maGhe, giaVe };
+      return { ...state, maLichChieu, danhSachVe };
     },
   },
   extraReducers: (builder) => {

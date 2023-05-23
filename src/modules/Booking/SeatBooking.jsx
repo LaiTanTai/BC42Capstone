@@ -13,7 +13,7 @@ function SeatBooking({ movieID }) {
   const { dataTicket, isLoading, error, danhSachGheDangDat } = useSelector(
     (state) => state.getDataTicketReducer
   );
-
+  
   useEffect(() => {
     dispatch(getDataTicket(movieID));
   }, []);
@@ -40,6 +40,7 @@ function SeatBooking({ movieID }) {
               <div className={styles.maGhe} key={index}>
                 <button
                   onClick={() => {
+                  
                     dispatch(BOOKING_DAT_VE(item));
                   }}
                   disabled={item.daDat}
