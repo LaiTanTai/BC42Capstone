@@ -1,9 +1,10 @@
-import React, { Suspense ,lazy } from 'react';
-import {Route,Routes,BrowserRouter} from "react-router-dom"
-import MainLayout from './layouts/MainLayout/MainLayout';
-import AuthLayout from './layouts/AuthLayout/AuthLayout';
-import AdminLayout from './layouts/AdminLayout/AdminLayout';
-import ProtectedRoute from './routes/ProtectedRoute';
+import React, { Suspense, lazy } from "react";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import MainLayout from "./layouts/MainLayout/MainLayout";
+import AuthLayout from "./layouts/AuthLayout/AuthLayout";
+import AdminLayout from "./layouts/AdminLayout/AdminLayout";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import Booking from "./modules/Booking/Booking";
 
 const Home = lazy(() => import("./modules/Home/Home"));
 const MovieDetails = lazy(() => import("./modules/MovieDetails/MovieDetails"));
@@ -14,32 +15,32 @@ const SignUp = lazy(() => import("./modules/Authentication/SignUp/SignUp"));
 function App() {
   return (
     <Suspense fallback={<h1>Loading...</h1>}>
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<MainLayout/>}>
-          <Route index element={<Home/>}/>
-          <Route path='/movies/:movieID' element={<MovieDetails/>}/>
-          <Route
-              path="/booking/:bookingId"
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<Home />} />
+            <Route path="/movies/:movieID" element={<MovieDetails />} />
+            <Route
+              path="/booking/:movieID"
               element={
                 <ProtectedRoute>
-                  
+                  <Booking />
                 </ProtectedRoute>
               }
             />
-        </Route>
-        <Route path='/' element={<AuthLayout/>}>
-          <Route path='/SignIn' element={<SignIn/>}/>
-          <Route path='/SignUp' element={<SignUp/>}/>
-        </Route>
-        <Route path='/Admin' element={<AdminLayout/>}>
-          <Route path='/Admin' element={<Admin/>}/>
-        </Route>
-      </Routes>
-    </BrowserRouter>
+          </Route>
+          <Route path="/" element={<AuthLayout />}>
+            <Route path="/SignIn" element={<SignIn />} />
+            <Route path="/SignUp" element={<SignUp />} />
+          </Route>
+          <Route path="/Admin" element={<AdminLayout />}>
+            <Route path="/Admin" element={<Admin />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </Suspense>
   );
 }
 
 export default App;
-// give me cat image 
+// give me cat image
