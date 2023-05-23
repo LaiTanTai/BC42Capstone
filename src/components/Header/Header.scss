@@ -5,11 +5,11 @@
 .navbar {
   background:linear-gradient(to right,#14a1c8,#300da3);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 2rem;
   .navbar-brand {
     font-family: 'Bruno Ace', cursive;
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: #212529;
   }
   .navbar-nav {
@@ -21,7 +21,7 @@
       &.nav-item {
         a {
           font-weight: 700;
-          font-size: 13px;
+          font-size: 20px;
           color: #212529;
           display: flex;
           align-items: center;

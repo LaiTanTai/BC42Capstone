@@ -45,7 +45,7 @@ function Showtime() {
       const data = await getCinematicBySystem(key)
       const items = data.content.map((item) =>{
         return (
-          getItem(<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" className="w-100" style={{border:"0px",backgroundColor:"transparent",fontSize:"5px",fontWeight:"700" ,textAlign:"left"}}><p style={{height:"10px",marginBottom:"2px",fontSize:"12px"}}>{item.tenCumRap}</p>{item.diaChi}</button>,item.maCumRap,'')
+          getItem(<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" className="w-100" style={{border:"0px",backgroundColor:"transparent",fontSize:"8px",fontWeight:"700" ,textAlign:"left"}}><p style={{height:"10px",marginBottom:"2px",fontSize:"15px"}}>{item.tenCumRap}</p>{item.diaChi}</button>,item.maCumRap,'')
         )
       })
       setCinemafilm(items)
@@ -80,7 +80,7 @@ function Showtime() {
         />
         <Menu
           onClick={checkfilmdetail}
-          style={{width:270}}
+          style={{width:300}}
           defaultSelectedKeys={['1']}
           items={cinemafilm}
         />
@@ -97,27 +97,35 @@ function Showtime() {
                     return(
                       CumRap.lstCumRap.map((item)=>{
                         return(
-                          item.danhSachPhim.map((film)=>{
-                            return (
+                          item.danhSachPhim.map((film,index)=>{
+                            if(index < 15){
+                              return (
                               <div className='mb-2 d-flex' style={{gap:"20px"}}>
-                                <img className='img-fluid ' style={{width:'120px', height:'150px'}} src={film.hinhAnh}/>
+                              <div style={{width:'200px', height:'200px'}}>
+                                <img className='w-100 h-100'  src={film.hinhAnh}/>
+                              </div>
                                 <div className='w-100'>
-                                  <h6>{film.tenPhim}</h6>
+                                  <h5 style={{fontWeight:"700"}}>{film.tenPhim}</h5>
                                   <div className='row'>
+                                  <p style={{margin:"1px 0px 1px 0px"}}>Ngày khởi chiếu</p>
                                     {
                                       film.lstLichChieuTheoPhim.map((value,index)=>{
                                         if(index < 4){
                                           return (
-                                          <a className="col-6 text-success" style={{fontSize:"10px"}}>{value.ngayChieuGioChieu}</a>
+                                        
+                                          
+                                          <a className="col-6 text-success" style={{fontSize:"13px"}}>{value.ngayChieuGioChieu}</a>
+                                          
                                           )
                                         }
                                       })
                                     }
-                                    <a className='text-danger' style={{fontSize:"10px"}}>Chi tiết</a>
+                                    <a className='text-danger' style={{fontSize:"15px"}}>Chi tiết</a>
                                   </div>
                                 </div>
                               </div>
                             )    
+                            }
                           })
                         )
                       })

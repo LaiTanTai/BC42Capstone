@@ -5,3 +5,21 @@
     color:$primary-color;
     border-bottom: 2px solid $primary-color;
 }
+.card-text{
+    margin-top : 1px;
+    margin-bottom: 1px;
+    font-size: 15px;
+    font-weight:700 ;
+    color: $primary-color;   
+}
+.card-date_publish{
+    color: green;
+}
+.card-button{
+    padding: 5px 10px 5px 10px;
+    background-image: linear-gradient(to right , $primary-color,#3ca4e4);
+    font-size: 17px;
+    font-weight: 600;
+    border-radius:20px;
+    border: 0px;
+}
