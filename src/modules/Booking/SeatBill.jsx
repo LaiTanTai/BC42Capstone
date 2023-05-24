@@ -10,25 +10,22 @@ function SeatBill({ bookingID }) {
   const { dataTicket, isLoading, error, danhSachGheDangDat, payTicket } =
     useSelector((state) => state.getDataTicketReducer);
 
-  // const { maLichChieu, danhSachVe } = useSelector(
-  //   (state) => state.infoPostTicketReducer
-  // );
-  const [listTicket, setListTicket] = useState({
-    maLichChieu: bookingID,
-    danhSachVe: [],
-  });
+  const { maLichChieu, danhSachVe } = useSelector(
+    (state) => state.infoPostTicketReducer
+  );
 
+  console.log(bookingID);
+  let listTicket = [];
   const getListTicket = () => {
-    let danhSachVe = danhSachGheDangDat.map((infoItem) => {
+    listTicket = danhSachGheDangDat.map((infoItem) => {
       return {
         maGhe: infoItem.maGhe,
         giaVe: infoItem.giaVe,
       };
     });
 
-    setListTicket(...listTicket, listTicket.danhSachVe);
+    return listTicket;
   };
-  console.log(listTicket);
   const infoTicket = dataTicket?.content?.thongTinPhim;
   useEffect(() => {
     dispatch(getDataTicket(bookingID));
@@ -96,10 +93,12 @@ function SeatBill({ bookingID }) {
       <button
         className={styles.setButtonTicket}
         type="button"
-        onClick={() => {
+        onMouseEnter={() => {
           getListTicket();
           dispatch(BOOKING_POST_DATA({ bookingID, listTicket }));
-          // dispatch(postDataTicket({ maLichChieu, listTicket }));
+        }}
+        onClick={() => {
+          dispatch(postDataTicket({ maLichChieu, danhSachVe }));
         }}
       >
         ĐẶT VÉ

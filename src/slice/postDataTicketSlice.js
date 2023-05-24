@@ -24,8 +24,7 @@ const infoPostTicketSlice = createSlice({
     builder.addCase(postDataTicket.pending, (state) => {
       return { ...state, isLoadingPost: true, isLoadingPost: null };
     });
-    builder.addCase(postDataTicket.fulfilled, (state, action) => {
-      console.log(initialState);
+    builder.addCase(postDataTicket.fulfilled, (state) => {
       return { ...state, isLoadingPost: false };
     });
     builder.addCase(postDataTicket.rejected, (state, action) => {
@@ -38,4 +37,4 @@ const infoPostTicketSlice = createSlice({
   },
 });
 export const { BOOKING_POST_DATA } = infoPostTicketSlice.actions;
-export default infoPostTicketSlice.reducer;
+export default infoPostTicketSlice.reducer; 

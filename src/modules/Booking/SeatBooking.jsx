@@ -13,7 +13,7 @@ function SeatBooking({ bookingID }) {
   const { dataTicket, isLoading, error, danhSachGheDangDat } = useSelector(
     (state) => state.getDataTicketReducer
   );
-  
+
   useEffect(() => {
     dispatch(getDataTicket(bookingID));
   }, []);
@@ -33,6 +33,14 @@ function SeatBooking({ bookingID }) {
             let indexGheDangDat = danhSachGheDangDat.findIndex(
               (gheDD) => gheDD.maGhe === item.maGhe
             );
+
+            let classGheDaDuocDat = "";
+            if (
+              JSON.parse(localStorage.getItem("user"))?.taiKhoan ===
+              item.taiKhoanNguoiDat
+            ) {
+              classGheDaDuocDat = "gheDaDuocDat";
+            }
             if (indexGheDangDat !== -1) {
               classGheDaDat = "gheDangDat";
             }
@@ -40,13 +48,12 @@ function SeatBooking({ bookingID }) {
               <div className={styles.maGhe} key={index}>
                 <button
                   onClick={() => {
-                  
                     dispatch(BOOKING_DAT_VE(item));
                   }}
                   disabled={item.daDat}
                   key={index}
                   type="button"
-                  className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat}`}
+                  className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat} ${classGheDaDuocDat}`}
                 >
                   {item.daDat ? <FontAwesomeIcon icon={faXmark} /> : item.stt}
                 </button>
