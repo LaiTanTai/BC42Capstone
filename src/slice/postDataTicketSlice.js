@@ -15,8 +15,6 @@ const infoPostTicketSlice = createSlice({
     BOOKING_POST_DATA: (state, action) => {
       const { bookingID, listTicket } = action.payload;
       let maLichChieu = bookingID;
-      console.log(listTicket);
-      console.log(bookingID);
       return { ...state, maLichChieu: maLichChieu, danhSachVe: listTicket };
     },
   },
@@ -37,4 +35,5 @@ const infoPostTicketSlice = createSlice({
   },
 });
 export const { BOOKING_POST_DATA } = infoPostTicketSlice.actions;
-export default infoPostTicketSlice.reducer; 
+// export const {postData_ticket/fulfilled} = infoPostTicketSlice.actions
+export default infoPostTicketSlice.reducer;

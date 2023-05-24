@@ -10,11 +10,10 @@ function SeatBill({ bookingID }) {
   const { dataTicket, isLoading, error, danhSachGheDangDat, payTicket } =
     useSelector((state) => state.getDataTicketReducer);
 
-  const { maLichChieu, danhSachVe } = useSelector(
+  const { maLichChieu, danhSachVe, isLoadingPost } = useSelector(
     (state) => state.infoPostTicketReducer
   );
 
-  console.log(bookingID);
   let listTicket = [];
   const getListTicket = () => {
     listTicket = danhSachGheDangDat.map((infoItem) => {
@@ -99,6 +98,9 @@ function SeatBill({ bookingID }) {
         }}
         onClick={() => {
           dispatch(postDataTicket({ maLichChieu, danhSachVe }));
+        }}
+        onMouseLeave={() => {
+          if (danhSachVe.length !== 0) window.location.reload();
         }}
       >
         ĐẶT VÉ

@@ -20,8 +20,6 @@ export const postDataTicket = createAsyncThunk(
   async (state) => {
     try {
       const response = await axiosAdmin.post(`/QuanLyDatVe/DatVe`, state);
-      console.log(state);
-      console.log(response.data);
       return response.data;
     } catch (error) {
       throw error.response.data.message;

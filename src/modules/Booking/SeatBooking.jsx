@@ -13,9 +13,11 @@ function SeatBooking({ bookingID }) {
   const { dataTicket, isLoading, error, danhSachGheDangDat } = useSelector(
     (state) => state.getDataTicketReducer
   );
+  
 
   useEffect(() => {
     dispatch(getDataTicket(bookingID));
+    
   }, []);
 
   const RenderBookingTicket = () => {

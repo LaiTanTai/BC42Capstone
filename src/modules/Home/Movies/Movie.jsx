@@ -40,7 +40,7 @@ function Movie() {
                       Chi tiết
                     </button>
                     <NavLink
-                      to={`/theater/${item.maPhim}`}
+                      to={`/movies/${item.maPhim}`}
                       className="card-button text-dark p-2 ms-5"
                       style={{ textDecoration: "none" }}
                     >
