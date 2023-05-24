@@ -5,6 +5,7 @@ import AuthLayout from "./layouts/AuthLayout/AuthLayout";
 import AdminLayout from "./layouts/AdminLayout/AdminLayout";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Booking from "./modules/Booking/Booking";
+import TheaterDetails from "./theaterDetails/TheaterDetails";
 
 const Home = lazy(() => import("./modules/Home/Home"));
 const MovieDetails = lazy(() => import("./modules/MovieDetails/MovieDetails"));
@@ -16,12 +17,14 @@ function App() {
   return (
     <Suspense fallback={<h1>Loading...</h1>}>
       <BrowserRouter>
+        z
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path="/movies/:movieID" element={<MovieDetails />} />
+            <Route path="/theater/:theaterID" element={<TheaterDetails />} />
             <Route
-              path="/booking/:movieID"
+              path="/booking/:bookingID"
               element={
                 <ProtectedRoute>
                   <Booking />

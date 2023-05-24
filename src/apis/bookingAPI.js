@@ -4,10 +4,10 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getDataTicket = createAsyncThunk(
   "booking/getData_ticket",
-  async (movieID) => {
+  async (bookingID) => {
     try {
       const response = await axiosClient.get(
-        `/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${movieID}`
+        `/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${bookingID}`
       );
       return response.data;
     } catch (error) {
@@ -20,6 +20,8 @@ export const postDataTicket = createAsyncThunk(
   async (state) => {
     try {
       const response = await axiosAdmin.post(`/QuanLyDatVe/DatVe`, state);
+      console.log(state);
+      console.log(response.data);
       return response.data;
     } catch (error) {
       throw error.response.data.message;

@@ -4,29 +4,34 @@ import styles from "./SeatBill.module.scss";
 import { getDataTicket, postDataTicket } from "../../apis/bookingAPI";
 import { BOOKING_POST_DATA } from "../../slice/postDataTicketSlice";
 
-function SeatBill({ movieID }) {
+function SeatBill({ bookingID }) {
   const dispatch = useDispatch();
 
   const { dataTicket, isLoading, error, danhSachGheDangDat, payTicket } =
     useSelector((state) => state.getDataTicketReducer);
 
-  const { maLichChieu, danhSachVe } = useSelector(
-    (state) => state.infoPostTicketReducer
-  );
-  let listTicket = [];
+  // const { maLichChieu, danhSachVe } = useSelector(
+  //   (state) => state.infoPostTicketReducer
+  // );
+  const [listTicket, setListTicket] = useState({
+    maLichChieu: bookingID,
+    danhSachVe: [],
+  });
+
   const getListTicket = () => {
-    listTicket = danhSachGheDangDat.map((infoItem) => {
+    let danhSachVe = danhSachGheDangDat.map((infoItem) => {
       return {
         maGhe: infoItem.maGhe,
         giaVe: infoItem.giaVe,
       };
     });
 
-    return listTicket;
+    setListTicket(...listTicket, listTicket.danhSachVe);
   };
+  console.log(listTicket);
   const infoTicket = dataTicket?.content?.thongTinPhim;
   useEffect(() => {
-    dispatch(getDataTicket(movieID));
+    dispatch(getDataTicket(bookingID));
   }, []);
 
   const RenderInfoTicket = () => {
@@ -93,8 +98,8 @@ function SeatBill({ movieID }) {
         type="button"
         onClick={() => {
           getListTicket();
-          dispatch(BOOKING_POST_DATA({ movieID, listTicket }));
-          dispatch(postDataTicket({ maLichChieu, danhSachVe }));
+          dispatch(BOOKING_POST_DATA({ bookingID, listTicket }));
+          // dispatch(postDataTicket({ maLichChieu, listTicket }));
         }}
       >
         ĐẶT VÉ

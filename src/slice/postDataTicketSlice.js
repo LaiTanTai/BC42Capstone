@@ -4,8 +4,8 @@ import { postDataTicket } from "../apis/bookingAPI";
 const initialState = {
   maLichChieu: 0,
   danhSachVe: [],
-  isLoading: false,
-  error: null,
+  isLoadingPost: false,
+  errorPost: null,
 };
 
 const infoPostTicketSlice = createSlice({
@@ -13,20 +13,27 @@ const infoPostTicketSlice = createSlice({
   initialState,
   reducers: {
     BOOKING_POST_DATA: (state, action) => {
-      const { movieID, danhSachVe } = action.payload;
-      let maLichChieu = movieID;
-      return { ...state, maLichChieu, danhSachVe };
+      const { bookingID, listTicket } = action.payload;
+      let maLichChieu = bookingID;
+      console.log(listTicket);
+      console.log(bookingID);
+      return { ...state, maLichChieu: maLichChieu, danhSachVe: listTicket };
     },
   },
   extraReducers: (builder) => {
     builder.addCase(postDataTicket.pending, (state) => {
-      return { ...state, isLoading: true, error: null };
+      return { ...state, isLoadingPost: true, isLoadingPost: null };
     });
-    builder.addCase(postDataTicket.fulfilled, (state) => {
-      return { ...state, isLoading: false };
+    builder.addCase(postDataTicket.fulfilled, (state, action) => {
+      console.log(initialState);
+      return { ...state, isLoadingPost: false };
     });
     builder.addCase(postDataTicket.rejected, (state, action) => {
-      return { ...state, isLoading: false, error: action.error.message };
+      return {
+        ...state,
+        isLoadingPost: false,
+        isLoadingPost: action.error.message,
+      };
     });
   },
 });

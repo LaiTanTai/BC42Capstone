@@ -8,14 +8,14 @@ import { BOOKING_DAT_VE } from "../../slice/getDataTicketSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
-function SeatBooking({ movieID }) {
+function SeatBooking({ bookingID }) {
   const dispatch = useDispatch();
   const { dataTicket, isLoading, error, danhSachGheDangDat } = useSelector(
     (state) => state.getDataTicketReducer
   );
   
   useEffect(() => {
-    dispatch(getDataTicket(movieID));
+    dispatch(getDataTicket(bookingID));
   }, []);
 
   const RenderBookingTicket = () => {

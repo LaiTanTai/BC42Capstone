@@ -1,16 +1,16 @@
-import React from 'react'
-import Movieinfo from './Movieinfo/Movieinfo'
-import Showtime from './Showtime/Showtime'
-import { useParams } from 'react-router-dom'
+import React from "react";
+import Movieinfo from "./Movieinfo/Movieinfo";
+import Showtime from "./Showtime/Showtime";
+import { useParams } from "react-router-dom";
 function MovieDetails() {
-  const {movieID} = useParams();
-  console.log(movieID) 
+  const { movieID } = useParams();
+  console.log(movieID);
   return (
-    <>
-        <Movieinfo movieID={movieID}/>
-        <Showtime movieID={movieID}/>
-    </>
-  )
+    <div >
+      <Movieinfo movieID={movieID} />
+      <Showtime movieID={movieID} />
+    </div>
+  );
 }
 
-export default MovieDetails
+export default MovieDetails;
