@@ -2,27 +2,33 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./SeatBill.module.scss";
 import { getDataTicket, postDataTicket } from "../../apis/bookingAPI";
-import { BOOKING_DAT_VE } from "../../slice/getDataTicketSlice";
 import { BOOKING_POST_DATA } from "../../slice/postDataTicketSlice";
 
-function SeatBill({ movieID }) {
+function SeatBill({ bookingID }) {
   const dispatch = useDispatch();
 
   const { dataTicket, isLoading, error, danhSachGheDangDat, payTicket } =
     useSelector((state) => state.getDataTicketReducer);
-  let maGhe = 0;
-  let giaVe = 0;
 
+  const { maLichChieu, danhSachVe } = useSelector(
+    (state) => state.infoPostTicketReducer
+  );
+
+  console.log(bookingID);
+  let listTicket = [];
   const getListTicket = () => {
-    danhSachGheDangDat.map((infoItem) => {
-      maGhe = infoItem.maGhe;
-      giaVe = infoItem.giaVe;
+    listTicket = danhSachGheDangDat.map((infoItem) => {
+      return {
+        maGhe: infoItem.maGhe,
+        giaVe: infoItem.giaVe,
+      };
     });
+
+    return listTicket;
   };
   const infoTicket = dataTicket?.content?.thongTinPhim;
   useEffect(() => {
-    dispatch(getDataTicket(movieID));
-    dispatch(postDataTicket());
+    dispatch(getDataTicket(bookingID));
   }, []);
 
   const RenderInfoTicket = () => {
@@ -87,9 +93,12 @@ function SeatBill({ movieID }) {
       <button
         className={styles.setButtonTicket}
         type="button"
-        onClick={() => {
+        onMouseEnter={() => {
           getListTicket();
-          dispatch(BOOKING_POST_DATA({ movieID, maGhe, giaVe }));
+          dispatch(BOOKING_POST_DATA({ bookingID, listTicket }));
+        }}
+        onClick={() => {
+          dispatch(postDataTicket({ maLichChieu, danhSachVe }));
         }}
       >
         ĐẶT VÉ

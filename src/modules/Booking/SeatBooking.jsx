@@ -8,14 +8,14 @@ import { BOOKING_DAT_VE } from "../../slice/getDataTicketSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
-function SeatBooking({ movieID }) {
+function SeatBooking({ bookingID }) {
   const dispatch = useDispatch();
   const { dataTicket, isLoading, error, danhSachGheDangDat } = useSelector(
     (state) => state.getDataTicketReducer
   );
 
   useEffect(() => {
-    dispatch(getDataTicket(movieID));
+    dispatch(getDataTicket(bookingID));
   }, []);
 
   const RenderBookingTicket = () => {
@@ -33,6 +33,14 @@ function SeatBooking({ movieID }) {
             let indexGheDangDat = danhSachGheDangDat.findIndex(
               (gheDD) => gheDD.maGhe === item.maGhe
             );
+
+            let classGheDaDuocDat = "";
+            if (
+              JSON.parse(localStorage.getItem("user"))?.taiKhoan ===
+              item.taiKhoanNguoiDat
+            ) {
+              classGheDaDuocDat = "gheDaDuocDat";
+            }
             if (indexGheDangDat !== -1) {
               classGheDaDat = "gheDangDat";
             }
@@ -45,7 +53,7 @@ function SeatBooking({ movieID }) {
                   disabled={item.daDat}
                   key={index}
                   type="button"
-                  className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat}`}
+                  className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat} ${classGheDaDuocDat}`}
                 >
                   {item.daDat ? <FontAwesomeIcon icon={faXmark} /> : item.stt}
                 </button>
