@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap");
+.navbar {
+  background: linear-gradient(to right, #14a1c8, #300da3);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 2rem;
+}
+.navbar .navbar-brand {
+  font-family: "Bruno Ace", cursive;
+  font-weight: 700;
+  font-size: 2rem;
+  color: #212529;
+}
+.navbar .navbar-nav.mr-auto {
+  margin-right: auto;
+}
+.navbar .navbar-nav li.nav-item a {
+  font-weight: 700;
+  font-size: 20px;
+  color: #212529;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.navbar .navbar-nav li.nav-item a:hover {
+  color: #fff;
+}
+.navbar .navbar-nav li.nav-item a svg {
+  margin-right: 0.5rem;
+}
+.navbar .navbar-nav li.nav-item a.active {
+  color: #fff;
+}
+.navbar .navbar-toggler {
+  border: none;
+  background-color: transparent;
+}
+.navbar .navbar-toggler-icon {
+  background-color: #212529;
+  height: 2px;
+  width: 18px;
+  display: block;
+  margin: auto;
+  transition: all 0.2s ease;
+}
+.navbar .navbar-toggler-icon::before, .navbar .navbar-toggler-icon::after {
+  content: "";
+  display: block;
+  background-color: currentColor;
+  height: 2px;
+  width: 18px;
+  position: absolute;
+  left: 0;
+  transition: all 0.2s ease;
+}
+.navbar .navbar-toggler-icon::before {
+  transform: translateY(-6px);
+}
+.navbar .navbar-toggler-icon::after {
+  transform: translateY(6px);
+}
+.navbar .navbar-toggler:not(.collapsed) .navbar-toggler-icon {
+  transform: rotate(90deg);
+}
+.navbar .navbar-toggler:not(.collapsed) .navbar-toggler-icon::before {
+  transform: translateY(0) rotate(45deg);
+}
+.navbar .navbar-toggler:not(.collapsed) .navbar-toggler-icon::after {
+  transform: translateY(0) rotate(-45deg);
+}/*# sourceMappingURL=Header.css.map */

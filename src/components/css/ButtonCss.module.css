@@ -1,0 +1,12 @@
+.btn-custom {
+  background-color: #5ccab4;
+  color: white;
+  border: 1px solid #5ccab4;
+  border-radius: 0.8rem;
+}
+
+.user-background {
+  background-color: rgba(42, 39, 39, 0.52);
+  min-height: 100vh;
+  width: 100%;
+}/*# sourceMappingURL=ButtonCss.module.css.map */
