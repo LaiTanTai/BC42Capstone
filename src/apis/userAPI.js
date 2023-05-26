@@ -32,7 +32,7 @@ export const apiAddUser = async (values) => {
 
 export const apiUpdateUser = async (values) => {
   const payload = { ...values, maNhom: "GP04" };
-  const { data } = await axiosAdmin.put(
+  const { data } = await axiosAdmin.post(
     "/QuanLyNguoiDung/CapNhatThongTinNguoiDung",
     payload
   );

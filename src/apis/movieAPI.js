@@ -1,10 +1,11 @@
-import axios from "axios";
+// import axios from "axios";
 import axiosClient from "./axiosClient";
+// import axiosAdmin from "./axiosAdmin";
 
 export const getmovieAPI = async () => {
   const { data } = await axiosClient.get("/QuanLyPhim/LayDanhSachPhim", {
     params: {
-      maNhom: "GP04",
+      maNhom: "GP01",
     },
   });
   return data;
@@ -19,9 +20,7 @@ export const getMovieDetail = async (movieID) => {
       MaPhim: movieID,
     },
   });
-  return data;
 };
-
 export const layThongTinPhimAPI = async (maPhim) => {
   const { data } = await axiosClient.get(
     `/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${maPhim}`,

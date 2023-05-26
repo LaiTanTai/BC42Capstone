@@ -19,6 +19,23 @@ import {
 import style from "./User.module.scss";
 import ButtonCss from "./../../../components/Button/ButtonCss";
 import Table from "react-bootstrap/Table";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object({
+  taiKhoan: yup.string().required("Tài khoản không được để trống"),
+  matKhau: yup
+    .string()
+    .required("Mật khẩu không được để trống")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+      "Mật khẩu ít nhất 8 kí tự, phải có 1 chữ hoa, 1 chữ thường và 1 số"
+    ),
+  email: yup.string().required("Email không được để trống").email(),
+  soDt: yup.number().required("Số điện thoại không được để trống"),
+  maNhom: yup.string().required("Mã nhóm không được để trống"),
+  hoTen: yup.string().required("Họ tên không được để trống"),
+});
 
 function User() {
   const [listUser, setListUser] = useState([]);
@@ -36,17 +53,24 @@ function User() {
     console.log(clickedUser);
   };
 
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     // declare initial value for inputs
     defaultValues: {
       taiKhoan: "",
-      MatKhau: "",
+      matKhau: "",
       email: "",
       soDt: "",
       maNhom: "",
       maLoaiNguoiDung: "",
       hoTen: "",
     },
+    mode: "onTouched",
+    // Khai báo schema validation bằng yup
+    resolver: yupResolver(schema),
   });
 
   const onSubmit = async (value) => {
@@ -56,6 +80,7 @@ function User() {
       console.log(error);
     }
     handleClose();
+    getListUsers();
   };
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -67,10 +92,12 @@ function User() {
     clearTimeout(timeoutRef.current);
 
     timeoutRef.current = setTimeout(async () => {
-      console.log(evt.target.value);
-      const data = await apiSearchUser(evt.target.value);
-      setListUser(data.content);
-      console.log("data", listUser);
+      if (evt.target.value !== "") {
+        const data = await apiSearchUser(evt.target.value);
+        setListUser(data.content);
+      } else {
+        await getListUsers();
+      }
     }, 1000);
   };
 
@@ -85,14 +112,17 @@ function User() {
     } catch (error) {
       console.log(error);
     }
+    getListUsers();
   };
 
   const onUpdate = async (value) => {
+    console.log(value);
     try {
       const data = await apiUpdateUser(value);
     } catch (error) {
       console.log(error);
     }
+    getListUsers();
     setShowFix(false);
   };
 
@@ -118,69 +148,76 @@ function User() {
         <ButtonCss info={"Thêm người dùng"} handleClick={handleShow} />
 
         <Modal className="Modal-background" show={show} onHide={handleClose}>
-          <Modal.Header className="text-light">
+          <Modal.Header className="text-dark">
             <Modal.Title>Thêm người dùng</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridEmail">
-                  <Form.Label className="text-light">Tài Khoản</Form.Label>
+                  <Form.Label className="text-dark">Tài Khoản</Form.Label>
                   <Form.Control
                     placeholder="Tài Khoản"
                     {...register("taiKhoan")}
                   />
+                  {errors.taiKhoan && <p>{errors.taiKhoan.message}</p>}
                 </Form.Group>
                 <Form.Group as={Col} controlId="formGridPassword">
-                  <Form.Label className="text-light">Mật Khẩu</Form.Label>
+                  <Form.Label className="text-dark">Mật Khẩu</Form.Label>
                   <Form.Control
                     placeholder="Mật Khẩu"
                     type="password"
-                    {...register("MatKhau")}
+                    {...register("matKhau")}
                   />
+                  {errors.matKhau && <p>{errors.matKhau.message}</p>}
                 </Form.Group>
               </Row>
 
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridEmail">
-                  <Form.Label className="text-light">Họ Tên</Form.Label>
+                  <Form.Label className="text-dark">Họ Tên</Form.Label>
                   <Form.Control placeholder="Họ Tên" {...register("hoTen")} />
+                  {errors.hoTen && <p>{errors.hoTen.message}</p>}
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridEmail">
-                  <Form.Label className="text-light">Số Điện Thoại</Form.Label>
+                  <Form.Label className="text-dark">Số Điện Thoại</Form.Label>
                   <Form.Control
                     placeholder="ví dụ: 08xxxxxxx"
                     {...register("soDt")}
                   />
+                  {errors.soDt && <p>{errors.soDt.message}</p>}
                 </Form.Group>
               </Row>
 
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridEmail">
-                  <Form.Label className="text-light">
+                  <Form.Label className="text-dark">
                     Mã Loại Người Dùng
                   </Form.Label>
-                  <Form.Control
-                    placeholder="Mã Loại Người Dùng"
-                    {...register("maLoaiNguoiDung")}
-                  />
+                  <Form.Select {...register("maLoaiNguoiDung")}>
+                    <option>Chọn Loại Người Dùng</option>
+                    <option value="KhachHang">Khách Hàng</option>
+                    <option value="QuanTri">Quản Trị</option>
+                  </Form.Select>
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridEmail">
-                  <Form.Label className="text-light">Mã Nhóm</Form.Label>
+                  <Form.Label className="text-dark">Mã Nhóm</Form.Label>
                   <Form.Control placeholder="Mã Nhóm" {...register("maNhom")} />
+                  {errors.maNhom && <p>{errors.maNhom.message}</p>}
                 </Form.Group>
               </Row>
 
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridEmail">
-                  <Form.Label className="text-light">Email</Form.Label>
+                  <Form.Label className="text-dark">Email</Form.Label>
                   <Form.Control
                     placeholder="Email"
                     type="email"
                     {...register("email")}
                   />
+                  {errors.email && <p>{errors.email.message}</p>}
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridEmail"></Form.Group>
@@ -243,77 +280,83 @@ function User() {
                       show={showFix}
                       onHide={() => setShowFix(false)}
                     >
-                      <Modal.Header className="text-light">
+                      <Modal.Header className="text-dark">
                         <Modal.Title>Sửa thông tin người dùng</Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
                         <Form>
                           <Row className="mb-3">
                             <Form.Group as={Col} controlId="formGridEmail">
-                              <Form.Label className="text-light">
+                              <Form.Label className="text-dark">
                                 Tài Khoản
                               </Form.Label>
-                              <Form.Control
-                                placeholder={updateUser.taiKhoan}
-                                {...register("taiKhoan")}
-                              />
+                              <Form.Control value={updateUser.taiKhoan} />
                             </Form.Group>
                             <Form.Group as={Col} controlId="formGridPassword">
-                              <Form.Label className="text-light">
+                              <Form.Label className="text-dark">
                                 Mật Khẩu
                               </Form.Label>
                               <Form.Control
                                 type="password"
                                 placeholder={updateUser.matKhau}
-                                {...register("MatKhau")}
+                                {...register("matKhau")}
                               />
+                              {errors.matKhau && (
+                                <p>{errors.matKhau.message}</p>
+                              )}
                             </Form.Group>
                           </Row>
 
                           <Row className="mb-3">
                             <Form.Group as={Col} controlId="formGridEmail">
-                              <Form.Label className="text-light">
+                              <Form.Label className="text-dark">
                                 Họ Tên
                               </Form.Label>
                               <Form.Control
                                 placeholder={updateUser.hoTen}
                                 {...register("hoTen")}
                               />
+                              {errors.hoTen && <p>{errors.hoTen.message}</p>}
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridEmail">
-                              <Form.Label className="text-light">
+                              <Form.Label className="text-dark">
                                 Số Điện Thoại
                               </Form.Label>
                               <Form.Control
                                 placeholder={updateUser.soDT}
                                 {...register("soDt")}
                               />
+                              {errors.soDt && <p>{errors.soDt.message}</p>}
                             </Form.Group>
                           </Row>
 
                           <Row className="mb-3">
                             <Form.Group as={Col} controlId="formGridEmail">
-                              <Form.Label className="text-light">
+                              <Form.Label className="text-dark">
                                 Mã Loại Người Dùng
                               </Form.Label>
-                              <Form.Control
-                                placeholder={updateUser.maLoaiNguoiDung}
-                                {...register("maLoaiNguoiDung")}
-                              />
+                              <Form.Select {...register("maLoaiNguoiDung")}>
+                                <option>Chọn Loại Người Dùng</option>
+                                <option value="KhachHang">Khách Hàng</option>
+                                <option value="QuanTri">Quản Trị</option>
+                              </Form.Select>
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridEmail">
-                              <Form.Label className="text-light">
+                              <Form.Label className="text-dark">
                                 Mã Nhóm
                               </Form.Label>
-                              <Form.Control value="GP04" />
+                              <Form.Control
+                                value="GP04"
+                                {...register("maNhom")}
+                              />
                             </Form.Group>
                           </Row>
 
                           <Row className="mb-3">
                             <Form.Group as={Col} controlId="formGridEmail">
-                              <Form.Label className="text-light">
+                              <Form.Label className="text-dark">
                                 Email
                               </Form.Label>
                               <Form.Control
@@ -321,6 +364,7 @@ function User() {
                                 placeholder={updateUser.email}
                                 {...register("email")}
                               />
+                              {errors.email && <p>{errors.email.message}</p>}
                             </Form.Group>
 
                             <Form.Group
