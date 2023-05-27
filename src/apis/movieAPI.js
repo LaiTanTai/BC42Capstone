@@ -32,6 +32,32 @@ export const apiSearchFilm = async () => {
   return data;
 };
 
+export const apiCreateMovie = async (movie) => {
+  const formData = new FormData();
+  for (let key in movie) {
+    formData.append(key, movie[key]);
+  }
+  formData.append("maNhom", "GP04");
+
+  await axiosClient.post("/QuanLyPhim/ThemPhimUploadHinh", formData);
+};
+
+export const apiUpdateMovie = async (movie) => {
+  const formData = new FormData();
+  for (let key in movie) {
+    formData.append(key, movie[key]);
+  }
+  formData.append("maNhom", "GP04");
+
+  await axiosAdmin.post("/QuanLyPhim/CapNhatPhimUpload", formData);
+};
+
+export const apiDeleteFilm = async (values) => {
+  const { data } = await axiosAdmin.delete("/QuanLyPhim/XoaPhim", {
+    params: { MaPhim: values },
+  });
+  return data;
+};
 export const layThongTinPhimAPI = async (maPhim) => {
   const { data } = await axiosClient.get(
     `/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${maPhim}`,
@@ -56,15 +82,6 @@ export const layCumRapTheoHeThongAPI = async () => {
 export const layThongTinCumRapTheoHeThongAPI = async (maHeThongRap) => {
   const { data } = await axiosClient.get(
     `"/QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=${maHeThongRap}"`
-  );
-  return data;
-};
-
-export const apiUpdateUser = async (values) => {
-  const payload = { ...values, maNhom: "GP04" };
-  const { data } = await axiosAdmin.post(
-    "/QuanLyNguoiDung/CapNhatThongTinNguoiDung",
-    payload
   );
   return data;
 };

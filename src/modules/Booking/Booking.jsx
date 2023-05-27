@@ -1,13 +1,13 @@
 import React from "react";
 import SeatBooking from "./SeatBooking";
 import SeatBill from "./SeatBill";
-import "./Booking.module.scss";
+import "./Booking.scss";
 import { useParams } from "react-router";
 
 function Booking() {
   const { bookingID } = useParams();
   return (
-    <div>
+    <div className="booking">
       <div className="row" style={{ width: "100%" }}>
         <div className="col-8 my-5 py-5">
           <SeatBooking bookingID={bookingID} />

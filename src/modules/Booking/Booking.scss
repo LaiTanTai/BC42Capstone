@@ -1,0 +1,69 @@
+@import "../SpinnerLoading/connect";
+
+.booking {
+    .row {
+        @include responsive_laptop--medium {
+            display: block;
+            margin: 0;
+            padding: 0;
+        }
+
+        @include responsive_laptop--mini {
+            display: block;
+            margin: 0;
+            padding: 0;
+        }
+
+        @include responsive_tablet {
+            display: block;
+            margin: 0;
+            padding: 0;
+        }
+
+        @include responsive_mobile {
+            display: block;
+            margin: 0;
+            padding: 0;
+        }
+
+        .col-8 {
+            @include responsive_laptop--medium {
+                width: 100%;
+            }
+
+            @include responsive_laptop--mini {
+                width: 100%;
+            }
+
+            @include responsive_tablet {
+                width: 100%;
+            }
+
+            @include responsive_mobile {
+                width: 100%;
+            }
+        }
+
+        .col-4 {
+            @include responsive_laptop--medium {
+                width: 100%;
+            }
+
+            @include responsive_laptop--mini {
+                width: 100%;
+            }
+
+            @include responsive_tablet {
+                width: 100%;
+            }
+
+            @include responsive_mobile {
+                width: 100%;
+            }
+
+            .SeatBill_setButtonTicket__FCbgX {
+                margin-top: 40px;
+            }
+        }
+    }
+}

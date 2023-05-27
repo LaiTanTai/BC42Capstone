@@ -1,9 +1,81 @@
-.ghe {
-  width: 45px;
-  height: 45px;
-  border: none;
-  margin-bottom: 15px;
-  border-radius: 20px;
+@import "../SpinnerLoading/connect";
+
+.seatBooking__Box {
+
+  display: flex;
+  flex-wrap: wrap;
+
+  @include responsive_laptop--medium {
+    margin: auto !important;
+  }
+
+  @include responsive_laptop--mini {
+    margin: auto !important;
+  }
+
+  // @include responsive_tablet {
+  //   margin: auto !important;
+  // }
+
+  @include responsive_mobile {
+    margin: auto !important;
+  }
+
+
+  .SeatBooking_maGhe__VYTJT {
+    flex-basis: calc(100% / 16);
+
+    @include responsive_laptop--medium {
+      height: 45px;
+      width: 45px;
+      margin-bottom: 20px;
+    }
+
+    @include responsive_laptop--mini {
+      width: 35px;
+      height: 35px;
+      margin-bottom: 17px;
+    }
+
+    // @include responsive_tablet {
+    //   width: 35px;
+    //   height: 35px;
+    //   margin-bottom: 12px;
+    // }
+
+    @include responsive_mobile {
+      width: 30px;
+      height: 30px;
+      margin-bottom: 15px;
+      flex-basis: calc(100% / 8);
+    }
+
+    .ghe {
+      width: 45px;
+      height: 45px;
+      border: none;
+      margin-bottom: 15px;
+      border-radius: 20px;
+
+      @include responsive_laptop--medium {
+        height: 45px;
+        width: 45px;
+        font-size: 16px;
+      }
+
+      @include responsive_laptop--mini {
+        height: 35px;
+        width: 35px;
+        font-size: 14px;
+      }
+
+      @include responsive_mobile {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+      }
+    }
+  }
 }
 
 .ghe:hover {

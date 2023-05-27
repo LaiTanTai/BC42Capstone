@@ -13,11 +13,9 @@ function SeatBooking({ bookingID }) {
   const { dataTicket, isLoading, error, danhSachGheDangDat } = useSelector(
     (state) => state.getDataTicketReducer
   );
-  
 
   useEffect(() => {
     dispatch(getDataTicket(bookingID));
-    
   }, []);
 
   const RenderBookingTicket = () => {
@@ -26,7 +24,7 @@ function SeatBooking({ bookingID }) {
     if (error) return <h1 className="text-center text-danger">error</h1>;
     if (dataTicket) {
       return (
-        <div style={{ marginLeft: "73px" }}>
+        <div className="seatBooking__Box" style={{ marginLeft: "73px" }}>
           {dataTicket?.content?.danhSachGhe.map((item, index) => {
             let classGheVip = item.loaiGhe === "Vip" ? "gheVip" : "";
             let classGheDaDat = item.daDat === true ? "gheDaDat" : "";
@@ -59,7 +57,6 @@ function SeatBooking({ bookingID }) {
                 >
                   {item.daDat ? <FontAwesomeIcon icon={faXmark} /> : item.stt}
                 </button>
-                {(index + 1) % 16 === 0 ? <br /> : ""}
               </div>
             );
           })}
@@ -69,7 +66,7 @@ function SeatBooking({ bookingID }) {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="seatBooking container-fluid">
       <RenderBookingTicket />
     </div>
   );
