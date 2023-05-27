@@ -1,32 +1,68 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "../ShowTime/ShowTime.scss";
 import Description from "../Description/Description";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+
 // import Comment from "../Comment/Comment";
+function TabPanel(tab) {
+  const { children, value, index, ...other } = tab;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`vertical-tabpanel-${index}`}
+      aria-labelledby={`vertical-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `vertical-tab-${index}`,
+    "aria-controls": `vertical-tabpanel-${index}`,
+  };
+}
 export default function ShowTime(props) {
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   let { phim, maPhim } = props;
+
   var moment = require("moment");
-  console.log(phim);
   const renderRap = () => {
     return phim.heThongRapChieu?.map((heThongRap, index) => {
       return (
-        <a
+        <Tab
           key={index}
-          className="nav-link"
+          label={heThongRap.tenHeThongRap}
+          {...a11yProps({ index })}
+          icon={<img src={heThongRap.logo} alt={index} />}
+          // key={index}
+          className="nav-link text-success"
           id="v-pills-cgv-tab"
-          data-toggle="pill"
-          href={`#${heThongRap.maHeThongRap}`}
-          role="tab"
-          aria-controls="v-pills-cgv"
-          aria-selected="true"
-        >
-          <div className="img__content">
-            <img src={heThongRap.logo} alt={heThongRap.logo} />
-            <div className="img__text">
-              <div className="img__name">{heThongRap.tenHeThongRap}</div>
-            </div>
-          </div>
-        </a>
+          iconPosition="start"
+        />
       );
     });
   };
@@ -63,10 +99,11 @@ export default function ShowTime(props) {
         <li className="list__item" key={index}>
           <a
             className="theater__link"
-            data-toggle="collapse"
             href={`#${cumRap.maCumRap}`}
+            data-bs-toggle="collapse"
             role="button"
             aria-expanded="false"
+            // aria-controls="collapseExample"
           >
             <div className="row">
               <div className="theater__img col-2">
@@ -93,17 +130,18 @@ export default function ShowTime(props) {
       return (
         <div
           key={index}
-          className="tab-pane fade show"
+          className="tab-pane fade show active"
           id={heThongRap.maHeThongRap}
           role="tabpanel"
         >
-          <div className="theater__content">
+          <TabPanel value={value} index={index} className="theater__content">
             <ul className="list__theater">{renderShowTime(heThongRap)}</ul>
-          </div>
+          </TabPanel>
         </div>
       );
     });
   };
+
   return (
     <section className="tabBookMovie">
       <div className="container">
@@ -121,6 +159,7 @@ export default function ShowTime(props) {
               Lịch Chiếu
             </a>
           </li>
+
           <li className="nav-item">
             <a
               className="nav-link"
@@ -134,38 +173,23 @@ export default function ShowTime(props) {
               Thông Tin
             </a>
           </li>
-          <li className="nav-item">
-            <a
-              className="nav-link"
-              id="pills-contact-tab"
-              data-toggle="pill"
-              href="#pills-comment"
-              role="tab"
-              aria-controls="pills-comment"
-              aria-selected="false"
-            >
-              Đánh Giá
-            </a>
-          </li>
         </ul>
         {/* TAB LỊCH CHIẾU */}
         <div id="movieTheater" className="tab-content">
-          <div
-            className="tab-pane fade show active"
-            id="pills-schedule"
-            role="tabpanel"
-            aria-labelledby="pills-schedule-tab"
-          >
-            <div className="movieTheater__row row bg-light">
+          <div className="tab-pane fade show active" id="pills-schedule">
+            <Box className="movieTheater__row row bg-light">
               <div className="row__left col-md-4 col-sm-12">
-                <div
+                <Tabs
                   className="nav flex-column nav-pills"
                   id="v-pills-rap"
-                  role="tablist"
-                  aria-orientation="vertical"
+                  orientation="vertical"
+                  variant="scrollable"
+                  value={value}
+                  onChange={handleChange}
+                  aria-label="Vertical tabs example"
                 >
                   {renderRap()}
-                </div>
+                </Tabs>
               </div>
               <div
                 className="tab-content col-md-8 col-sm-12"
@@ -173,19 +197,15 @@ export default function ShowTime(props) {
               >
                 {renderCumRap()}
               </div>
-            </div>
+            </Box>
           </div>
           {/**Thông tin */}
-          <div
-            className="tab-pane fade"
-            id="pills-info"
-            role="tabpanel"
-            aria-labelledby="pills-info-tab"
-          >
-            <Description thongTin={phim} />
-          </div>
-          {/**Bình luận */}
-          {/* <div
+          <div>
+            <div path="/thong-tin" className="tab-pane fade" id="pills-info">
+              <Description thongTin={phim} />
+            </div>
+            {/**Bình luận */}
+            {/* <div
             className="tab-pane fade"
             id="pills-comment"
             role="tabpanel"
@@ -193,6 +213,7 @@ export default function ShowTime(props) {
           >
             <Comment thongTin={phim} maPhim={maPhim} />
           </div> */}
+          </div>
         </div>
       </div>
     </section>

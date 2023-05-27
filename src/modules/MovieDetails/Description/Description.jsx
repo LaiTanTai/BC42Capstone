@@ -2,6 +2,7 @@ import React from "react";
 import "./Description.scss";
 export default function Description(props) {
   let { thongTin } = props;
+  console.log(thongTin);
   var moment = require("moment");
   return (
     <div className="row__above row">

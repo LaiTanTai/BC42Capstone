@@ -62,7 +62,7 @@ export default function MovieInfo({ phimItem }) {
               </div>
             </div>
           </div>
-          <div className="movie__info col-6">
+          <div className="movie__info col-6 ms-sm-5 ms-lg-0">
             <div>
               <div className="showtime">
                 {moment(phimItem.ngayKhoiChieu).format("DD-MM-yy")}

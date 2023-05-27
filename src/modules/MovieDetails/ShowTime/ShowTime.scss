@@ -75,49 +75,48 @@
                 &:hover {
                   opacity: 1;
                 }
-                .img__content {
-                  position: relative;
-                  img {
-                    width: 50px;
-                    height: 50px;
+
+                position: relative;
+                img {
+                  width: 50px;
+                  height: 50px;
+                }
+                .img__text {
+                  position: absolute;
+                  left: 60px;
+                  right: 20px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  .img__name {
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    text-transform: uppercase;
+                    color: $color-black-1;
+                    @include Text($fs-2 - 4, $fw-medium);
+                    @include responsive_mobile {
+                      @include Text($fs-1, $fw-medium);
+                    }
+                    @include responsive_tablet {
+                      @include Text($fs-1 + 2, $fw-medium);
+                    }
                   }
-                  .img__text {
-                    position: absolute;
-                    left: 60px;
-                    right: 20px;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    .img__name {
-                      overflow: hidden;
-                      white-space: nowrap;
-                      text-overflow: ellipsis;
-                      text-transform: uppercase;
+                  .img__discount {
+                    display: flex;
+                    .img__icon {
+                      @include Text($fs-1, $fw-bold);
                       color: $color-black-1;
-                      @include Text($fs-2 - 4, $fw-medium);
+                      padding-top: spacing(0.4);
+                    }
+                    .img__description {
+                      @include Text($fs-1 + 1, $fw-regular);
+                      color: $color-red-0;
+                      padding-left: spacing(0.4);
                       @include responsive_mobile {
-                        @include Text($fs-1, $fw-medium);
+                        @include Text($fs-1 - 2, $fw-medium);
                       }
                       @include responsive_tablet {
-                        @include Text($fs-1 + 2, $fw-medium);
-                      }
-                    }
-                    .img__discount {
-                      display: flex;
-                      .img__icon {
-                        @include Text($fs-1, $fw-bold);
-                        color: $color-black-1;
-                        padding-top: spacing(0.4);
-                      }
-                      .img__description {
-                        @include Text($fs-1 + 1, $fw-regular);
-                        color: $color-red-0;
-                        padding-left: spacing(0.4);
-                        @include responsive_mobile {
-                          @include Text($fs-1 - 2, $fw-medium);
-                        }
-                        @include responsive_tablet {
-                          @include Text($fs-1, $fw-medium);
-                        }
+                        @include Text($fs-1, $fw-medium);
                       }
                     }
                   }
