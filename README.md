@@ -20,4 +20,4 @@
 
 Tài : trang home
 Lương: Phần quản trị
-Huy: Giao diện trang chi 8ết phim,Giao diện trang đặt vé
+Huy: Giao diện trang chi tiết phim,Giao diện trang đặt vé
