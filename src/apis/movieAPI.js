@@ -81,7 +81,12 @@ export const layCumRapTheoHeThongAPI = async () => {
 };
 export const layThongTinCumRapTheoHeThongAPI = async (maHeThongRap) => {
   const { data } = await axiosClient.get(
-    `"/QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=${maHeThongRap}"`
+    `"/QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=${maHeThongRap}"`,
+    {
+      params: {
+        maHeThongRap,
+      },
+    }
   );
   return data;
 };

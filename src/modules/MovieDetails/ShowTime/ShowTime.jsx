@@ -7,9 +7,10 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import { useTheme } from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
 
-// import Comment from "../Comment/Comment";
-function TabPanel(tab) {
+function TabPanelNavigationCinema(tab) {
   const { children, value, index, ...other } = tab;
 
   return (
@@ -29,23 +30,60 @@ function TabPanel(tab) {
   );
 }
 
-TabPanel.propTypes = {
+function TabPanelBarInfo(props) {
+  const { children, value, index, ...other } = props;
+  console.log(props);
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanelNavigationCinema.propTypes = {
   children: PropTypes.node,
   index: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
 };
 
-function a11yProps(index) {
+TabPanelBarInfo.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yPropsBarInfo(index) {
+  return {
+    id: `full-width-tab-${index}`,
+    "aria-controls": `full-width-tabpanel-${index}`,
+  };
+}
+
+function a11yPropsNavigationCinema(index) {
   return {
     id: `vertical-tab-${index}`,
     "aria-controls": `vertical-tabpanel-${index}`,
   };
 }
 export default function ShowTime(props) {
-  const [value, setValue] = useState(0);
+  const [valueNavigationCinema, setValueNavigationCinema] = useState(0);
+  const [valueBarInfo, setValueBarInfo] = useState(0);
+  const changeNavigationCinema = (event, newValue) => {
+    setValueNavigationCinema(newValue);
+  };
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const changeNavigationBarInfo = (event, newValue) => {
+    setValueBarInfo(newValue);
   };
   let { phim, maPhim } = props;
 
@@ -56,7 +94,7 @@ export default function ShowTime(props) {
         <Tab
           key={index}
           label={heThongRap.tenHeThongRap}
-          {...a11yProps({ index })}
+          {...a11yPropsNavigationCinema({ index })}
           icon={<img src={heThongRap.logo} alt={index} />}
           // key={index}
           className="nav-link text-success"
@@ -79,7 +117,7 @@ export default function ShowTime(props) {
                   className="timeshow__link"
                   to={`/booking/${lichChieu.maLichChieu}`}
                 >
-                  <div className="time__begin mb-2">
+                  <div className="time__begin">
                     {moment(lichChieu.ngayChieuGioChieu).format("DD/MM/yyyy")}
                     <p>
                       {moment(lichChieu.ngayChieuGioChieu).format("hh:mm A")}
@@ -134,9 +172,13 @@ export default function ShowTime(props) {
           id={heThongRap.maHeThongRap}
           role="tabpanel"
         >
-          <TabPanel value={value} index={index} className="theater__content">
+          <TabPanelNavigationCinema
+            value={valueNavigationCinema}
+            index={index}
+            className="theater__content"
+          >
             <ul className="list__theater">{renderShowTime(heThongRap)}</ul>
-          </TabPanel>
+          </TabPanelNavigationCinema>
         </div>
       );
     });
@@ -145,38 +187,43 @@ export default function ShowTime(props) {
   return (
     <section className="tabBookMovie">
       <div className="container">
-        <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
-          <li className="nav-item">
-            <a
-              className="nav-link active"
-              id="pills-home-tab"
-              data-toggle="pill"
-              href="#pills-schedule"
-              role="tab"
-              aria-controls="pills-schedule"
-              aria-selected="true"
+        <Box
+          sx={{ bgcolor: "background.paper", width: 500 }}
+          style={{ margin: "auto" }}
+        >
+          <AppBar position="static">
+            <Tabs
+              // className="nav nav-pills mb-3"
+              // id="pills-tab"
+              value={valueBarInfo}
+              onChange={changeNavigationBarInfo}
+              indicatorColor="secondary"
+              textColor="inherit"
+              variant="fullWidth"
+              aria-label="full width tabs example"
             >
-              Lịch Chiếu
-            </a>
-          </li>
+              <Tab
+                className="nav-item"
+                {...a11yPropsBarInfo(0)}
+                label="Lịch Chiếu"
+              />
 
-          <li className="nav-item">
-            <a
-              className="nav-link"
-              id="pills-profile-tab"
-              data-toggle="pill"
-              href="#pills-info"
-              role="tab"
-              aria-controls="pills-info"
-              aria-selected="false"
-            >
-              Thông Tin
-            </a>
-          </li>
-        </ul>
+              <Tab
+                className="nav-item"
+                {...a11yPropsBarInfo(1)}
+                label="Thông Tin"
+              />
+            </Tabs>
+          </AppBar>
+        </Box>
         {/* TAB LỊCH CHIẾU */}
         <div id="movieTheater" className="tab-content">
-          <div className="tab-pane fade show active" id="pills-schedule">
+          <TabPanelBarInfo
+            value={valueBarInfo}
+            index={0}
+            // className="tab-pane"
+            // id="pills-schedule"
+          >
             <Box className="movieTheater__row row bg-light">
               <div className="row__left col-md-4 col-sm-12">
                 <Tabs
@@ -184,8 +231,8 @@ export default function ShowTime(props) {
                   id="v-pills-rap"
                   orientation="vertical"
                   variant="scrollable"
-                  value={value}
-                  onChange={handleChange}
+                  value={valueNavigationCinema}
+                  onChange={changeNavigationCinema}
                   aria-label="Vertical tabs example"
                 >
                   {renderRap()}
@@ -198,21 +245,17 @@ export default function ShowTime(props) {
                 {renderCumRap()}
               </div>
             </Box>
-          </div>
+          </TabPanelBarInfo>
           {/**Thông tin */}
           <div>
-            <div path="/thong-tin" className="tab-pane fade" id="pills-info">
+            <TabPanelBarInfo
+              value={valueBarInfo}
+              index={1}
+              className="tab-pane"
+              id="pills-info"
+            >
               <Description thongTin={phim} />
-            </div>
-            {/**Bình luận */}
-            {/* <div
-            className="tab-pane fade"
-            id="pills-comment"
-            role="tabpanel"
-            aria-labelledby="pills-comment-tab"
-          >
-            <Comment thongTin={phim} maPhim={maPhim} />
-          </div> */}
+            </TabPanelBarInfo>
           </div>
         </div>
       </div>

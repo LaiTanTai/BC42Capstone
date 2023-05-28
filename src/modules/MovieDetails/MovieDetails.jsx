@@ -11,7 +11,6 @@ function MovieDetails() {
   const layThongTinPhim = async (movieID) => {
     try {
       const data = await layThongTinPhimAPI(movieID);
-      console.log(data.content);
       setPhimItem(data.content);
       $loading(false);
     } catch (error) {
@@ -26,10 +25,10 @@ function MovieDetails() {
       {loading ? (
         <SpinnerLoading />
       ) : (
-        <>
+        <div>
           <Movieinfo phimItem={phimItem} />
           <Showtime phim={phimItem} maPhim={movieID} />
-        </>
+        </div>
       )}
     </Fragment>
   );
