@@ -32,7 +32,6 @@ function TabPanelNavigationCinema(tab) {
 
 function TabPanelBarInfo(props) {
   const { children, value, index, ...other } = props;
-  console.log(props);
   return (
     <div
       role="tabpanel"
@@ -251,8 +250,8 @@ export default function ShowTime(props) {
             <TabPanelBarInfo
               value={valueBarInfo}
               index={1}
-              className="tab-pane"
-              id="pills-info"
+              // className="tab-pane"
+              // id="pills-info"
             >
               <Description thongTin={phim} />
             </TabPanelBarInfo>

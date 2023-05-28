@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faPlay } from "@fortawesome/free-solid-svg-icons";
 
 import { faStar as farStar } from "@fortawesome/free-regular-svg-icons";
+import ModalTrailer from "../ModalTrailer/ModalTrailer";
 
 export default function MovieInfo({ phimItem }) {
   const [open, setOpen] = React.useState(false);
@@ -37,7 +38,7 @@ export default function MovieInfo({ phimItem }) {
           style={{ height: "450px" }}
         />
         <div className="overlay__gradient" />
-        <div className="play__mobile">
+        <div className="play__mobile" onClick={handleToggle}>
           <FontAwesomeIcon icon={faPlay} />
         </div>
         <div className="rating__point">
@@ -101,12 +102,12 @@ export default function MovieInfo({ phimItem }) {
         <div className="name">{phimItem.tenPhim}</div>
         <div className="during">120 phút</div>
       </div>
-      {/* <ModalTrailer
+      <ModalTrailer
         trailer={phimItem.trailer}
         maPhim={phimItem.maPhim}
         open={open}
         handleToggle={handleToggle}
-      /> */}
+      />
     </section>
   );
 }
