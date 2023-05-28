@@ -17,5 +17,5 @@
 -Các components này thường sẽ chứa logic nghiệp vụ của ứng dụng (call API ,redux)
 
 - APIS/
-- Chứa phần setup các phương thcuws gọi api (axios)
-- Chứa các hàm gọi API
+ - Chứa phần setup các phương thcuws gọi api (axios)
+ - Chứa các hàm gọi API      
